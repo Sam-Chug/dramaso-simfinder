@@ -1,8 +1,8 @@
 //#region Strings
 const VERSION_STR = "v0.2.3c";
 
-const SIM_ONLINE_URL = "https://api.freeso.org/userapi/avatars/online";
-const LOTS_ONLINE_URL = "https://api.freeso.org/userapi/city/1/lots/online";
+const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
+const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
 
 // TODO: Most of these can be replaced with json's with keys
 

@@ -16,7 +16,7 @@ The Sim Finder is an interactive dashboard where you can view both sim and house
 - View currently active sim jobs and the city's current time
 - User-defined custom styles for sims and houses
 	- Users can decorate their sim or house breakdown by adding a sequence of style indicators to their in-game 		descriptions
-	- View the [Style Wiki](https://github.com/Sam-Chug/sim-finder/wiki/Custom-Sim-Panel-Styles) for more information on building a style sequence for your sim or house
+	- View the [Style Wiki](https://github.com/Sam-Chug/dramaso-simfinder/wiki/Custom-Sim-Panel-Styles) for more information on building a style sequence for your sim or house
 - Several useful filters for all entities
 	- Houses can be filtered by their lot category
 		- Includes lots with no selected category, which are normally hard to find in-game

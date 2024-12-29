@@ -118,22 +118,22 @@ Shelved Ideas:
 
 API Link References:
     - All online sim data
-        - https://api.freeso.org/userapi/avatars/online
+        - https://api.dramaso.org/userapi/avatars/online
 
     - All online lot data
-        - https://api.freeso.org/userapi/city/1/lots/online
+        - https://api.dramaso.org/userapi/city/1/lots/online
 
     - Cached offline sim data (using avatar id)
-        - https://api.freeso.org/userapi/avatars?ids=887,30363 etc.
+        - https://api.dramaso.org/userapi/avatars?ids=887,30363 etc.
 
     - Cached offline sim data (using sim name)
-        - https://api.freeso.org/userapi/city/1/avatars/name/burglar%20cop
+        - https://api.dramaso.org/userapi/city/1/avatars/name/burglar%20cop
 
     - Return single cached offline lot data (using lot id)
-        - https://api.freeso.org/userapi/lots/6852
+        - https://api.dramaso.org/userapi/lots/6852
 
     - Cached offline lot data (using lot name)
-        - https://api.freeso.org/userapi/city/1/lots/name/M.O.M.I.%20Headquarters
+        - https://api.dramaso.org/userapi/city/1/lots/name/M.O.M.I.%20Headquarters
 
     - Lot thumbnail (using lot location)
-        - https://api.freeso.org/userapi/city/1/13828398.png
+        - https://api.dramaso.org/userapi/city/1/13828398.png
