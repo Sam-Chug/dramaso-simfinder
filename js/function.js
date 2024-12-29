@@ -2201,7 +2201,7 @@ storageUtils = function() {
         localStorage.removeItem(storageKey);
 
         // Set storage to have one sim ID
-        let initStorage = { simID: [194687] };
+        let initStorage = { simID: [7] };
         localStorage.setItem(storageKey, JSON.stringify(initStorage));
     }
 

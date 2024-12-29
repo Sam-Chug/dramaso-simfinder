@@ -164,12 +164,12 @@ const CONFETTI_SPAWN_COUNT = 128;
 const MAX_STYLES = 10; // Maximum styles to loop through
 
 //TODO: change to "simfinder-id-list"
-const STORAGE_BOOKMARK_KEY = "idList";
-const STORAGE_BOOKMARK_KEY_OLD = "idList";
+const STORAGE_BOOKMARK_KEY = "dramaso-idList";
+const STORAGE_BOOKMARK_KEY_OLD = "dramaso-idList";
 
-const STORAGE_BOOKMARK_CACHE_KEY = "sf-idList-cache";
+const STORAGE_BOOKMARK_CACHE_KEY = "dramaso-idList-cache";
 
-const SETTINGS_KEY = "simfinder-settings";
+const SETTINGS_KEY = "dramaso-settings";
 //#endregion
 
 //#region Market Watch Constants
