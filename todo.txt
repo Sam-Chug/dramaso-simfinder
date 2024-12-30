@@ -1,6 +1,6 @@
 Sim Finder Notes
 
-Patchnotes v0.2.4a:
+Patchnotes v0.2.4b:
     - Roommates data cached on first fetch instead of being fetched every time lot is viewed
     - Offline sim data now cached on first fetch instead of being fetched every time a single offline sim is revisited
     - Fixed townhall mayors not being listed
@@ -11,7 +11,7 @@ Patchnotes v0.2.4a:
     - Added fun confetti effects for special occasions
     - (Hopefully) fixed some weird bug with birthdays
     
-Patchnotes v0.2.4a:
+Patchnotes v0.2.4b:
     - Fixed false positive in staff detection
     - Fix name panel clipboard copy also copying emojis
     - Fixed darkmode button rendering below elements

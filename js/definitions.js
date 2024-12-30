@@ -1,5 +1,5 @@
 //#region Strings
-const VERSION_STR = "v0.2.4a";
+const VERSION_STR = "v0.2.4b";
 
 const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
 const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
@@ -73,40 +73,12 @@ const BULLETIN_TYPE = [
 
 // Neighborhood names in order of neighborhood id
 const NEIGHBORHOOD = [
-    "Trio Lake", //1
-    "The Sunrise Riviera", //35
-    "Bhugarbha Triangle",
-    "Journey's End",
-    "Offbeat Islands",
-    "Spiral Cove",
-    "Riverblossom Ravines",
-    "Dragon's Isle",
-    "Strangetown",
-    "Serpent's Spine",
-    "Crescent Rock",
-    "Specific Ocean",
-    "Turtle Rock",
-    "M.O.M.I. Mire",
-    "Eagles Cliff",
-    "Little Cornerstone",
-    "Quack's Creek",
-    "Corns Cobb",
-    "Aurora Summit",
-    "Lumberborough",
-    "D.A.M.N.",
-    "Fisherman's Front",
-    "Clover Heights",
-    "Calvin's Coast",
-    "Tourist Trap",
-    "Wright Shoals",
-    "Sunset Canyon",
-    "Remingtons Reef",
-    "Meta Mesa",
-    "Servo's Slice",
-    "Volcanic Springs",
-    "Sim Francisco",
-    "Lunar Lake",
-    "Multilevel Metropolis"
+    "Cub's Land", //1
+    "Grotesque Islands", //2
+    "Reagan's Sea", //3
+    "Spooky Island", //4
+    "Darkness Islands", //5
+    "Sunset Ocean" //6
 ];
 
 // Sim filter keys
@@ -278,10 +250,10 @@ const CONFETTI_DATA = {
 const CUSTOM_STYLE_REAGAN = "Reaganomics Lamborghini";
 
 const CUSTOM_STYLE_SIMHEADS = {
-    male: "./images/sim-faces/simface-m.png?v0.2.4a",
-    female: "./images/sim-faces/simface-f.png?v0.2.4a",
-    reagan: "./images/sim-faces/simface-rea.png?v0.2.4a",
-    bear: "./images/sim-faces/simface-b.png?v0.2.4a"
+    male: "./images/sim-faces/simface-m.png?v0.2.4b",
+    female: "./images/sim-faces/simface-f.png?v0.2.4b",
+    reagan: "./images/sim-faces/simface-rea.png?v0.2.4b",
+    bear: "./images/sim-faces/simface-b.png?v0.2.4b"
 };
 const CUSTOM_STYLE_BLOCK = {
     bp: {
