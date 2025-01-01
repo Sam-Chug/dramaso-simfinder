@@ -82,18 +82,10 @@ simFinderMain = function() {
 
         // Fill sim/lot lists
         guiUtils.populateSimList(simDataHolder.simLongList.avatars);
-        guiUtils.writeToLabel(
-            "Sims Online: ", 
-            simDataHolder.simShortList.avatars_online_count, 
-            "sims-online-count-label"
-        );
+        guiUtils.writeToLabel(`Sims Online: ${simDataHolder.simShortList.avatars_online_count}`, "sims-online-count-label");
         
         guiUtils.populateLotList(simDataHolder.lotShortList.lots);
-        guiUtils.writeToLabel(
-            "Lots Online: ", 
-            simDataHolder.lotShortList.total_lots_online, 
-            "lots-online-count-label"
-        );
+        guiUtils.writeToLabel(`Lots Online: ${simDataHolder.lotShortList.total_lots_online}`, "lots-online-count-label");
 
         // Fill bookmark lists
         guiUtils.writeBookmarkSims(simDataHolder.bookmarkList);
