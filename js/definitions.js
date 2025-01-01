@@ -4,6 +4,8 @@ const VERSION_STR = "v0.2.4b";
 const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
 const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
 
+const NEWSPAPER_URL = "https://www.dramaso.org/newspaper.php?newspaper=1";
+
 // TODO: Most of these can be replaced with json's with keys
 
 // List of known staff sims
