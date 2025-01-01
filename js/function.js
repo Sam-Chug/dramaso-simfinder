@@ -1730,9 +1730,25 @@ searchUtils = function() {
         if (simName == "") return;
 
         let simLong;
-        if (!simUtils.checkIfSimInLongCache(simName)) {
+        if (!isNaN(simName)) {
 
-            // If sim not cached, fetch from API
+            // Sim ID lookup
+            simLong = await apiUtils.getAPIData("https://api.dramaso.org/userapi/avatars/" + simName);
+
+            // Alert if id doesn't exist
+            if ("error" in simLong || "avatarId") {
+
+                alert("Cannot find sim with ID \"" + simName + "\"");
+                return;
+            }
+
+            // Push to cache
+            apiUtils.sendSimEntityAnalytics(simLong.name, simLong.avatar_id);
+            simDataHolder.offlineLongSimList.push(simLong);
+        }
+        else if (!simUtils.checkIfSimInLongCache(simName)) {
+
+            // Sim name lookup
             simLong = await apiUtils.getAPIData("https://api.dramaso.org/userapi/city/1/avatars/name/" + simName.replace(" ", "%20"));
 
             // Alert if sim doesn't exist
