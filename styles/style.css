@@ -1076,6 +1076,8 @@ body {
     align-content: center;
     gap: 0em;
 
+    max-width: 560px;
+
     width: auto;
 }
 
