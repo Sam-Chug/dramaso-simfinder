@@ -66,8 +66,7 @@ simFinderMain = function() {
         );
 
         // Get SMO Percentages
-        if (!USE_NEWSPAPER_PLACEHOLDER) simDataHolder.payoutData = apiUtils.getAPIData(NEWSPAPER_URL);
-        else simDataHolder.payoutData = NEWSPAPER_PLACEHOLDER;
+        simDataHolder.payoutData = await apiUtils.getAPIData(NEWSPAPER_URL);
 
         let staffObject = await apiUtils.getDBLookupData();
         STAFF_NAMES = staffObject.staffNames;

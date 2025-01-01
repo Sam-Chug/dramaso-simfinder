@@ -1,12 +1,10 @@
 //#region Strings
-const VERSION_STR = "v0.2.4d";
+const VERSION_STR = "v0.2.4e";
 
 const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
 const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
 
 const NEWSPAPER_URL = "https://www.dramaso.org/newspaper.php?newspaper=1";
-const NEWSPAPER_PLACEHOLDER = {"Writer":"1.5","Easel":"1.35","Board":"1.20","Jam":"1.05","Potion":"0.90","Gnome":"0.75","Pinata":"0.60","Phone":"0.50"};
-const USE_NEWSPAPER_PLACEHOLDER = false;
 
 // List of known staff sims
 var STAFF_NAMES;
@@ -257,10 +255,10 @@ const CONFETTI_DATA = {
 const CUSTOM_STYLE_REAGAN = "Reaganomics Lamborghini";
 
 const CUSTOM_STYLE_SIMHEADS = {
-    male: "./images/sim-faces/simface-m.png?v0.2.4d",
-    female: "./images/sim-faces/simface-f.png?v0.2.4d",
-    reagan: "./images/sim-faces/simface-rea.png?v0.2.4d",
-    bear: "./images/sim-faces/simface-b.png?v0.2.4d"
+    male: "./images/sim-faces/simface-m.png?v0.2.4e",
+    female: "./images/sim-faces/simface-f.png?v0.2.4e",
+    reagan: "./images/sim-faces/simface-rea.png?v0.2.4e",
+    bear: "./images/sim-faces/simface-b.png?v0.2.4e"
 };
 const CUSTOM_STYLE_BLOCK = {
     bp: {
