@@ -35,6 +35,7 @@ class SimData{
     }
 };
 
+// This class is mostly for debug, but I keep it running anyways
 class APIStats{
     constructor() {
 
@@ -45,16 +46,19 @@ class APIStats{
         this.debugIncrement = 10;
     }
 
+    // Find number of api calls per minute
     callsPerMinute() {
 
         return this.totalCalls / this.minutesOpen();
     }
 
+    // Get number of minutes since opening page
     minutesOpen() {
 
         return (Date.now() - this.timeOpened) / 60000;
     }
 
+    // Increment call count when api fetch is called
     incrementAPICalls() {
 
         this.totalCalls++;
@@ -63,6 +67,7 @@ class APIStats{
         if (this.totalCalls % this.debugIncrement == 0) this.printAPIStats();
     }
 
+    // Print api stats to console
     printAPIStats() {
 
         console.log("%cAPI Ping Stats", "color: white; background-color: darkblue");
@@ -114,6 +119,7 @@ class StyleObject{
         this.handleSimStyles(simData.description);
     }
 
+    // Set the graphic for a sim's head based on the context available
     setSimHead(simData) {
 
         // If bear sim, set to bear
@@ -135,6 +141,7 @@ class StyleObject{
         }
     }
 
+    // Process a sim's requested styles from their bio
     handleSimStyles(simDescription) {
 
         let styleList = this.returnStyleList(simDescription);
@@ -150,7 +157,6 @@ class StyleObject{
             // Block styles
             if (styleList[i].charAt(0) == "b") {
 
-                // Check if block style list contains requested style
                 if (!CUSTOM_STYLE_BLOCK.hasOwnProperty(styleList[i])) continue;
                 this.styles.block = CUSTOM_STYLE_BLOCK[styleList[i]].cssClass;
                 this.styles.bookmarkLabel = CUSTOM_STYLE_BLOCK[styleList[i]].bookmarkLabelClass;
@@ -158,13 +164,11 @@ class StyleObject{
             // Label styles
             else if (styleList[i].charAt(0) == "l") {
 
-                // Check if block style list contains requested style
                 if (!CUSTOM_STYLE_LABEL.hasOwnProperty(styleList[i])) continue;
                 this.styles.label = CUSTOM_STYLE_LABEL[styleList[i]].cssClass;
             }
             else if (styleList[i].charAt(0) == "i") {
 
-                // Check if block style list contains requested style
                 if (!CUSTOM_STYLE_INSET.hasOwnProperty(styleList[i])) continue;
                 this.styles.inset = CUSTOM_STYLE_INSET[styleList[i]].cssClass;
             }
@@ -181,12 +185,14 @@ class StyleObject{
         }
     }
 
+    // If requested, generate a random style
     pickRandomStyle(styleList) {
 
         let keys = Object.keys(styleList);
         return styleList[keys[keys.length * Math.random() << 0]];
     }
 
+    // Return a sim's requested styles from their bio
     returnStyleList(simDescription) {
 
         let indexShift = (this.usesShorthand) ? 3 : 5;
@@ -228,6 +234,7 @@ class MarketObject{
         this.calculateJobMoney();
     }
 
+    // Build list of online money lots
     findMoneyLots() {
 
         // Get online money lots
@@ -274,6 +281,7 @@ class MarketObject{
         }
     }
 
+    // Calculate money currently being earned at job lots
     calculateJobMoney() {
 
         // Get list of lot locations

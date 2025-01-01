@@ -1,6 +1,8 @@
 simUtils = function() {
 
     //#region Sim time functions
+
+    // Return a sim's age in dats from a unix timestamp
     function returnSimAge(joinDate) {
 
         let utcNow = new Date().getTime();
@@ -8,6 +10,7 @@ simUtils = function() {
         return Math.floor((now - joinDate) / 86400);
     }
 
+    // Check if today is sim's birthday (results can be a little fuzzy sometimes)
     function checkIfSimBirthday(simUnix) {
 
         let utcNow = Math.floor(Date.now() / 1000);
@@ -16,9 +19,8 @@ simUtils = function() {
         let simDateObject = returnDateObjectFromUNIX(simUnix);
         let simDayAge = returnSimAge(simUnix);
 
-        // Make sure sim isnt old day old
+        // Omit 0 days, reward 1000 days
         if (simDayAge == 0) return false;
-        // Catch 1000 day milestones
         if (simDayAge % 1000 == 0) return true;
 
         // Check if today is sim's birthday
@@ -36,15 +38,10 @@ simUtils = function() {
         let mm = ("0" + (utcNow.getMonth() + 1)).slice(-2);
         let dd = ("0" + (utcNow.getDate())).slice(-2);
 
-        let timeObject = {
-            month: mm,
-            day: dd,
-            year: yyyy
-        }
-
-        return timeObject
+        return {month: mm, day: dd, year: yyyy};
     }
 
+    // Format {mm, dd, yyyy} as a fancy string with slashes
     function returnTextDateFromDateObject(dateObject) {
 
         return dateObject.month + "/" + dateObject.day + "/" + dateObject.year;
@@ -78,7 +75,6 @@ simUtils = function() {
     // Return if sim floating, hidden, or possibly landed
     function returnExistenceState(selectedSimShort) {
 
-        // If null simShort, they must be offline
         if ("error" in selectedSimShort) return "OFFLINE";
 
         const privacyMode = selectedSimShort.privacy_mode;
@@ -121,6 +117,7 @@ simUtils = function() {
         } 
     }
 
+    // Check if sim present in online-sim database
     function isSimOnline(simName) {
 
         for (let i = 0; i < simDataHolder.simShortList.avatars.length; i++) {
@@ -143,6 +140,7 @@ simUtils = function() {
     //#endregion
 
     //#region Short/long sim/lot finders
+
     // Return long lot object from list using location
     function returnLongLotFromLocation(location) {
 
@@ -166,7 +164,6 @@ simUtils = function() {
     // Return short sim from sims currently online, from avatar id
     function returnShortSimFromLong(longSim) {
 
-        // Null returns error object
         for (i = 0; i < simDataHolder.simShortList.avatars.length; i++) {
 
             let simID = simDataHolder.simShortList.avatars[i].avatar_id;
@@ -175,8 +172,7 @@ simUtils = function() {
         return {error: "sim not online"};
     }
 
-    // Return lot from sim ID
-    // Assumes sim is roommate possibly with privacy mode on
+    // Find lot of online roommate with privacy mode on
     function returnLongLotFromRoommate(simID) {
 
         for (i = 0; i < simDataHolder.lotLongList.lots.length; i++) {
@@ -196,8 +192,8 @@ simUtils = function() {
     //#endregion
 
     //#region Lot/Sim cache
-    // TODO: combine these two functions?
-    // Check if sim is in offline long cache
+
+    // Check if sim is in offline cache
     function checkIfSimInLongCache(simName) {
 
         simName = simName.toLowerCase()
@@ -220,7 +216,7 @@ simUtils = function() {
         return simLong;
     }
 
-    // Check if lot is in offline long cache
+    // Check if lot is in offline cache
     function checkIfLotInLongCache(lotName) {
 
         lotName = lotName.toLowerCase();
@@ -244,7 +240,7 @@ simUtils = function() {
     }
     //#endregion
 
-    // Neighborhood id's are wonky, return correct from id
+    // Return neighborhood name from id
     function returnNeighborhood(nhood_id) {
 
         return NEIGHBORHOOD[nhood_id - 1];
@@ -272,21 +268,18 @@ simUtils = function() {
 
                 simDataHolder.simShortList.avatars.sort((a, b) => a.name.localeCompare(b.name));
                 simDataHolder.simLongList.avatars.sort((a, b) => a.name.localeCompare(b.name));
-                
-                GUI_SORT_SIM_NAMES.style.background = `url(./images/buttons/name-sort-selected.png?v0.2.4e)`;
+                GUI_SORT_SIM_NAMES.style.background = `url(${RES_NAMESORT_SELECTED})`;
                 simDataHolder.simSort = "name";
             }
             else if (simDataHolder.simSort == "name") {
 
                 simDataHolder.simShortList.avatars.sort(({avatar_id:a}, {avatar_id:b}) => a - b);
                 simDataHolder.simLongList.avatars.sort(({avatar_id:a}, {avatar_id:b}) => a - b);
-
-                GUI_SORT_SIM_NAMES.style.background = `url(./images/buttons/name-sort.png?v0.2.4e)`;
+                GUI_SORT_SIM_NAMES.style.background = `url(${RES_NAMESORT_DESELECTED})`;
                 simDataHolder.simSort = "age";
             }
             let simFilter = (simDataHolder.simFilter == "REMOVE") ? "REMOVE" : SIM_FILTER_KEYS[simDataHolder.simFilter];
             filterUtils.writeFilterToTable("sim", simFilter);
-            //guiUtils.populateSimList(simDataHolder.simLongList.avatars);
         }
         else if (entityType == "lot") {
 
@@ -294,20 +287,17 @@ simUtils = function() {
 
                 simDataHolder.lotShortList.lots.sort((a, b) => a.name.localeCompare(b.name));
                 simDataHolder.lotLongList.lots.sort((a, b) => a.name.localeCompare(b.name));
-
-                GUI_SORT_LOT_NAMES.style.background = `url(./images/buttons/name-sort-selected.png?v0.2.4e)`;
+                GUI_SORT_LOT_NAMES.style.background = `url(${RES_NAMESORT_SELECTED})`;
                 simDataHolder.lotSort = "name";
             }
             else if (simDataHolder.lotSort == "name") {
 
                 simDataHolder.lotLongList.lots.sort(({avatars_in_lot:a}, {avatars_in_lot:b}) => b - a);
                 simDataHolder.lotShortList.lots.sort(({avatars_in_lot:a}, {avatars_in_lot:b}) => b - a);
-
-                GUI_SORT_LOT_NAMES.style.background = `url(./images/buttons/name-sort.png?v0.2.4e)`;
+                GUI_SORT_LOT_NAMES.style.background = `url(${RES_NAMESORT_DESELECTED})`;
                 simDataHolder.lotSort = "pop";
             }
             filterUtils.writeFilterToTable("lot", simDataHolder.lotFilter);
-            //guiUtils.populateLotList(simDataHolder.lotShortList.lots);
         }
     }
 
@@ -338,11 +328,13 @@ simUtils = function() {
 
 domUtils = function() {
 
+    // Get index of element in parent list (TODO: make less hacky)
     function getIndexInParent(element) {
 
         return Array.from(element.parentNode.children).indexOf(element);
     }
 
+    // Reset style of previously selected element in list
     function resetListSelection() {
 
         const elements = document.querySelectorAll("*");
@@ -352,7 +344,7 @@ domUtils = function() {
         });
     }
 
-    // Auto size lists to fit screen
+    // Auto size lists to fit screen (TODO: make less hacky)
     function sizeLists() {
 
         let windowHeight = window.innerHeight;
@@ -382,29 +374,23 @@ domUtils = function() {
         lotLabel.style.marginLeft = `calc(50% - ${lotLabelRect.width / 2}px)`;
     }
 
+    // Copy a sim or lot's name to clipboard when clicking the lot/sim bio title element
     function copyTextToClipboard(e) {
 
         navigator.clipboard.writeText(apiUtils.cleanLink(e.textContent));
     }
 
+    // Swap color modes between light and dark, and save to user settings
     function swapColorMode() {
 
-        // Change user settings and swap color modes
-        if (simDataHolder.userSetting.colorMode == "lightmode") {
+        if (simDataHolder.userSetting.colorMode == "lightmode") simDataHolder.userSetting.colorMode = "darkmode";
+        else if (simDataHolder.userSetting.colorMode == "darkmode") simDataHolder.userSetting.colorMode = "lightmode";
 
-            simDataHolder.userSetting.colorMode = "darkmode";
-            siteColorMode("darkmode");
-        }
-        else if (simDataHolder.userSetting.colorMode == "darkmode") {
-
-            simDataHolder.userSetting.colorMode = "lightmode";
-            siteColorMode("lightmode");
-        }
-
-        // Update storage
+        siteColorMode(simDataHolder.userSetting.colorMode)
         storageUtils.saveStorage(SETTINGS_KEY, JSON.stringify(simDataHolder.userSetting));
     }
 
+    // Change styles of page to reflect currently selected colormode
     function siteColorMode(state) {
 
         let domRoot = document.querySelector(':root');
@@ -436,6 +422,7 @@ domUtils = function() {
         }
     }
 
+    // Build tooltips for elements that need them
     function buildButtonTooltips() {
 
         addTooltipToButton(GUI_EXPORT_BUTTON, "export");
@@ -458,6 +445,7 @@ domUtils = function() {
         addTooltipToButton(SIDEBAR_JOB_FACTORY, "job", "factory");
     }
 
+    // Create event listener to show an elements tooltips (TODO: make less hacky)
     function addTooltipToButton(element, type, subType) {
 
         element.addEventListener("mouseover", function() {
@@ -511,13 +499,9 @@ domUtils = function() {
     
                     tooltip.textContent = string;
                     tooltip.classList.add("under-tooltip");
-    
-                    // Idk why this is messed up
                     tooltip.style.fontSize = "1em";
                     break;
             }
-
-            // Add tooltip to element
             this.append(tooltip);
         });
 
@@ -564,6 +548,7 @@ eggUtils = function() {
         GUI_BOOKMARK_LABEL.classList.add("bookmark-label");
     }
 
+    // Reset lot thumbnail styles
     function resetLotThumbnailStyles() {
 
         GUI_LOT_LABEL.className = "";
@@ -579,6 +564,7 @@ eggUtils = function() {
         GUI_LOT_BIO.classList.add("thumbnail-desc-holder", "thumb-2", "thumbnail-bio-holder", "scrollbar", "lot-thumbnail-bio");
     }
 
+    // Process easter egg when reagan is selected
     function reaganEgg() {
 
         GUI_SIM_LABEL.classList.add("label-gold");
@@ -592,6 +578,7 @@ eggUtils = function() {
         GUI_BOOKMARK_LABEL.classList.add("bookmark-gold");
     }   
 
+    // Test custom styles with style color sent in argument
     function testCustomStyle(color) {
 
         // Test specified style
@@ -601,9 +588,9 @@ eggUtils = function() {
         GUI_SIM_DESCRIPTION.classList.add(CUSTOM_STYLE_INSET[`i${color}`].cssClass);
     }
 
+    // Process and set a lot's bio styles
     function handleCustomLotStyles(selectedLot) {
 
-        // Reset previous styles
         resetLotThumbnailStyles();
 
         // Get lot custom styles
@@ -621,19 +608,17 @@ eggUtils = function() {
         }
     }
 
+    // Process and set a sim's bio styles
     function handleCustomSimStyles(selectedSim) {
 
-        // Reset previous styles
         resetSimThumbnailStyles();
-
-        // Assure sim view is open
         GUI_SIM_VIEW.style.display = "flex";
 
         // Test any custom style
         //testCustomStyle("o");
         //return;
 
-        // Do reagan
+        // If reagan, do easter egg
         if (selectedSim.name == CUSTOM_STYLE_REAGAN) {
 
             reaganEgg();
@@ -644,8 +629,6 @@ eggUtils = function() {
         let styleObj = new StyleObject(selectedSim);
         if (styleObj.isBirthday) spawnConfetti("sim", "confetti");
         if (styleObj.isStaff) spawnConfetti("sim", "staff");
-
-        // Set head
         GUI_SIM_THUMBNAIL.src = styleObj.avatarHead;
         if (styleObj.isStaff) GUI_SIM_THUMBNAIL.classList.add("staff-image");
 
@@ -660,6 +643,7 @@ eggUtils = function() {
         }
     }
 
+    // Spawn confetti if sim is appropriate
     var confettiObjects = new Array();
     function spawnConfetti(entity, type) {
 
@@ -705,6 +689,7 @@ eggUtils = function() {
         }, 950);
     }
 
+    // Despawn confetti after some time (kinda buggy)
     function removeConfetti() {
 
         if (confettiObjects.length <= 0) return;
@@ -717,7 +702,6 @@ eggUtils = function() {
         for (let i = 0; i < confettiObjects[0].confettiElements.length; i++) {
 
             let element = confettiObjects[0].confettiElements[i];
-
             element.classList.remove("confetti-container");
             void element.offsetWidth;
             element.parentNode.removeChild(element);
@@ -725,12 +709,11 @@ eggUtils = function() {
         confettiObjects.shift();
     }
 
-    // https://stackoverflow.com/questions/9614109/how-to-calculate-an-angle-from-points
+    // Generate random angle for confetti to fly in
     function findConfettiAngle(cx, cy, px, py) {
 
         let dy = py - cy;
         let dx = px - cx;
-
         let theta = Math.atan2(dy, dx);
         theta *= 180 / Math.PI;
 
@@ -749,14 +732,14 @@ eggUtils = function() {
 
 guiUtils = function() {
 
-    function writeToLabel(contentString, content, target) {
+    // Write content to target label
+    function writeToLabel(contentString, target) {
 
         const location = document.getElementById(target);
-        const labelText = contentString + content;
-        
-        location.textContent = labelText;
+        location.textContent = contentString;
     }
 
+    // Get sims name from a list of sim entries by index (TODO: make less hacky)
     function getSimNameFromList(listElement, index) {
 
         let simName = listElement.children[index].children[0].textContent;
@@ -764,7 +747,10 @@ guiUtils = function() {
     }
 
     //#region Populate Lot/Sim bios
-    // TODO: RENAME FUNCTION
+
+    // Get sim/lot name from index in list, clean and style it
+    // Also write sim/lot bio
+    // TODO: this does too many things, probably split this up
     async function getIndex(type, selectedName) {
 
         if (type == "sim") {
@@ -772,8 +758,6 @@ guiUtils = function() {
             // Get sim name from index
             let simName = selectedName;
             simName = apiUtils.cleanLink(simName);
-
-            // Selected sim data
             let selectedSimShort;
             let selectedSimLong = simDataHolder.simLongList.avatars.filter(obj => { return obj.name === simName; });
             selectedSimLong = selectedSimLong[0];
@@ -813,8 +797,6 @@ guiUtils = function() {
             // Get lot name from index
             let lotName = selectedName;
             lotName = apiUtils.cleanLink(lotName);
-
-            // Selected lot data
             let selectedLotShort;
             let selectedLotLong;
     
@@ -840,7 +822,7 @@ guiUtils = function() {
         return;
     }
 
-    // Write sim information
+    // Write sim bio information, write lot bio for the location they are currently at
     function writeGreaterSimContext(selectedSimShort, selectedSimLong, existence) {
         
         // Set bookmark button state, write sim bio
@@ -891,6 +873,7 @@ guiUtils = function() {
         writeLotThumbnail(selectedShortLot, selectedLongLot, existence, selectedSimLong);
     }
 
+    // Style sims name with a birthday cake or staff wrench
     function returnSimTitle(selectedSimLong) {
 
         let isBirthday = simUtils.checkIfSimBirthday(selectedSimLong.date);
@@ -902,6 +885,7 @@ guiUtils = function() {
         return `${selectedSimLong.name}${birthdayString}${staffString}`;
     }
 
+    // Style lot name with a birthday cake
     function returnLotTitle(selectedLotLong) {
 
         let isBirthday = simUtils.checkIfSimBirthday(selectedLotLong.created_date);
@@ -910,13 +894,11 @@ guiUtils = function() {
         return `${selectedLotLong.name}${birthdayString}`;
     }
 
-    // Build sim thumbnail
+    // Build sim bio/thumbnail
     function writeSimThumbnail(selectedSimShort, selectedSimLong) {
 
-        writeToLabel(returnSimTitle(selectedSimLong), "", "sim-title");
+        writeToLabel(returnSimTitle(selectedSimLong), "sim-title");
         simDataHolder.selSimID = selectedSimLong.avatar_id;
-
-        // Handle custom styles
         eggUtils.handleCustomSimStyles(selectedSimLong);
 
         // Write sim's bio text
@@ -966,9 +948,10 @@ guiUtils = function() {
         eggUtils.handleCustomLotStyles(selectedLotLong);
 
         // Lot label
-        writeToLabel(returnLotTitle(selectedLotLong), "", "thumbnail-title");
+        writeToLabel(returnLotTitle(selectedLotLong), "thumbnail-title");
 
         // Grab lot thumbnail from API
+        // TODO: move this to api utils
         let cacheBust = Math.floor(Math.random() * 10000000);
         let imageSource = `https://api.dramaso.org/userapi/city/1/${selectedLotLong.location}.png?cachebust:${cacheBust}`;
         console.log("%cFetching Lot Image:\n\n", "color: black; background-color: lightgreen;", imageSource);
@@ -993,10 +976,8 @@ guiUtils = function() {
         if (lotOffline) GUI_LOT_THUMBNAIL_BG.classList.add("thumbnail-offline");
         else GUI_LOT_THUMBNAIL_BG.classList.remove("thumbnail-offline");
 
-        // Append elements to lot bio
+        // Update elements
         GUI_LOT_DESCRIPTION.append(lotDesc);
-
-        // Un-hide lot bio
         GUI_LOT_BIO.textContent = selectedLotLong.description;
         GUI_LOT_BIO.style.display = "block";
     }
@@ -1005,7 +986,7 @@ guiUtils = function() {
     function writeAbsentLotThumbnail(existence, selectedSimLong) {
 
         // Set lot image to unknown
-        GUI_LOT_THUMBNAIL.src = "./images/unknown.png?v0.2.4e";
+        GUI_LOT_THUMBNAIL.src = `${RES_UNKNOWN_LOT}`;
         eggUtils.resetLotThumbnailStyles();
 
         // Get lot description and label
@@ -1014,38 +995,33 @@ guiUtils = function() {
         switch (existence) {
 
             case "FLOATING":
-
                 lotDescription = "Category: Air\nEstablished: Dawn of Time\nAdmit Mode: Admit All";
                 lotLabel = "Floating";
                 break;
 
             case "WORKING":
-
                 lotDescription = "Category: Job\nMaking: Simoleons";
                 lotLabel = `Working - ${JOB_STRINGS[selectedSimLong.current_job]}`;
                 break;
 
             case "HIDDEN":
-
                 lotDescription = "Hidden";
                 lotLabel = "Hidden";
                 break;
 
             case "OFFLINE":
-            
                 lotDescription = "This sim is touching grass";
                 lotLabel = "Offline";
                 break;
 
             default:
-
                 lotDescription = "This sim is touching grass";
                 lotLabel = "Offline";
                 break;
         }
 
         // Write label and description
-        writeToLabel(lotLabel, "", "thumbnail-title");
+        writeToLabel(lotLabel, "thumbnail-title");
         GUI_LOT_DESCRIPTION.textContent = lotDescription;
     }
 
@@ -1069,6 +1045,8 @@ guiUtils = function() {
     //#endregion
 
     //#region Build sim/lot lists
+
+    // Create element to act as a header for sim/lot lists
     function buildListHeader(columnLeftText, columnRightText) {
 
         let listHead = document.createElement("div");
@@ -1087,6 +1065,7 @@ guiUtils = function() {
         return listHead;
     }
 
+    // Fill sim list with sim entries
     function populateSimList(simList) {
 
         let simListContainer = document.getElementById('sims-table');
@@ -1097,14 +1076,14 @@ guiUtils = function() {
 
             let simNode = createListNode(returnSimTitle(simList[i]), `${simUtils.returnSimAge(simList[i].date)} Days`);
             addIndexClickHandler(simNode, "sim");
+            simListContainer.append(simNode);
 
             // If Reagan, add easter egg
             if (simList[i].name == CUSTOM_STYLE_REAGAN) simNode.children[0].classList.add("rainbow-text");
-
-            simListContainer.append(simNode);
         }
     }
 
+    // Fill lot list with lot entries
     function populateLotList(lotList) {
 
         let lotListContainer = document.getElementById('lots-table');
@@ -1122,13 +1101,8 @@ guiUtils = function() {
     // Write list of sims in selected lot
     async function writeSimsInLot(selectedLot, population) {
 
-        // TODO: Adding support for townhalls has bloated this quite a bit
-        // Refactor whenever I figure this out
-
         // Show sims in lot
         GUI_SIMS_IN_LOT.style.display = "flex";
-        
-        // Write number of sims in lot
         GUI_SIMS_IN_LOT_LABEL.textContent = `Sims In Lot: ${population}`;
 
         // Reset lists
@@ -1156,12 +1130,11 @@ guiUtils = function() {
                 let simName = simDataHolder.simShortList.avatars[i].name;
                 let simNode = createListNode(simName, "");
                 simNode.id = "sim-in-lot-list-node";
+                addIndexClickHandler(simNode, "sim-in-lot");
+                GUI_SIMS_IN_LOT_SIMS.append(simNode);
                 
                 // If Reagan, add easter egg
                 if (simName == CUSTOM_STYLE_REAGAN) simNode.children[0].classList.add("rainbow-text");
-
-                addIndexClickHandler(simNode, "sim-in-lot");
-                GUI_SIMS_IN_LOT_SIMS.append(simNode);
 
                 allCount++;
                 knownCount++;
@@ -1237,15 +1210,12 @@ guiUtils = function() {
         GUI_SIMS_IN_LOT_ROOMMATES.append(ownerNode);
 
         // Create elements for roommates at lot text
-        // Catch for townhalls
         if (!("error" in selectedLot.roommateLong)) {
 
             if (selectedLot.roommateLong.avatars.length > 1) {
 
-                // Add spacing
-                GUI_SIMS_IN_LOT_ROOMMATES.append(createListNode("", ""));
-    
                 // Create roommate header if roommates exist
+                GUI_SIMS_IN_LOT_ROOMMATES.append(createListNode("", ""));
                 let roommatesHeader = buildListHeader("Roommates", "");
                 roommatesHeader.id = "sim-in-lot-list-node";
                 GUI_SIMS_IN_LOT_ROOMMATES.append(roommatesHeader);
@@ -1291,6 +1261,7 @@ guiUtils = function() {
         }
     }
 
+    // Populate bookmark list with sims
     function writeBookmarkSims(simList) {
 
         // Reset bookmark list, append header
@@ -1322,11 +1293,10 @@ guiUtils = function() {
             let simName = returnSimTitle(sim);
             let simNode = createListNode(simName, simUtils.returnSimAge(sim.date) + " days");
             addIndexClickHandler(simNode, "bookmark");
+            GUI_BOOKMARK_LIST.append(simNode);
 
             // If Reagan, add easter egg
             if (sim.name == CUSTOM_STYLE_REAGAN) simNode.children[0].classList.add("rainbow-text");
-
-            GUI_BOOKMARK_LIST.append(simNode);
         }
 
         // Append and style offline sims
@@ -1340,6 +1310,7 @@ guiUtils = function() {
         }
     }
 
+    // Create node for list, with 2 columns (usually "sim/lot name", "age/sims in lot")
     function createListNode(contentLeft, contentRight) {
 
         let listNode = document.createElement("div");
@@ -1356,17 +1327,15 @@ guiUtils = function() {
         return listNode;
     }
 
+    // Add click listener for node in list
     function addIndexClickHandler(element, type) {
 
         if (type == "sim" || type == "bookmark") {
 
             element.addEventListener("click", function() {
 
-                // Grab index of sim in list
                 let index = domUtils.getIndexInParent(this);
                 let simName = getSimNameFromList(this.parentElement, index);
-
-                // Reset selection
                 domUtils.resetListSelection();
 
                 // Write sim bio
@@ -1378,11 +1347,8 @@ guiUtils = function() {
 
             element.addEventListener("click", function() {
 
-                // Grab index of lot in list
                 let index = domUtils.getIndexInParent(this);
                 let lotName = getSimNameFromList(this.parentElement, index);
-
-                // Reset selection
                 domUtils.resetListSelection();
 
                 // Write lot bio
@@ -1394,11 +1360,8 @@ guiUtils = function() {
 
             element.addEventListener("click", function() {
 
-                // Grab index of sim in list
                 let index = domUtils.getIndexInParent(this);
                 let simName = getSimNameFromList(this.parentElement, index);
-
-                // Reset selection
                 domUtils.resetListSelection();
 
                 // Write sim bio
@@ -1488,42 +1451,36 @@ filterUtils = function() {
         switch (filter) {
 
             case "JOB_DINER":
-
                 for (i = 0; i < simLongList.avatars.length; i++) {
                     if (simLongList.avatars[i].current_job == 2) longList.push(simLongList.avatars[i]);
                 }
                 break;
 
             case "JOB_CLUB_DJ":
-
                 for (i = 0; i < simLongList.avatars.length; i++) {
                     if (simLongList.avatars[i].current_job == 4) longList.push(simLongList.avatars[i]);
                 }
                 break;
 
             case "JOB_CLUB_DANCER":
-
                 for (i = 0; i < simLongList.avatars.length; i++) {
                     if (simLongList.avatars[i].current_job == 5) longList.push(simLongList.avatars[i]);
                 }
                 break;
 
             case "JOB_ROBOT":
-
                 for (i = 0; i < simLongList.avatars.length; i++) {
                     if (simLongList.avatars[i].current_job == 1) longList.push(simLongList.avatars[i]);
                 }
                 break;
 
             case "SHOWN":
-
                 for (i = 0; i < simShortList.avatars.length; i++) {
                     if (simShortList.avatars[i].privacy_mode == 0) longList.push(simLongList.avatars[i]);
                 }
                 break;
 
             case "HIDDEN":
-
                 for (let i = 0; i < simShortList.avatars.length; i++) {
                     
                     let existence = simUtils.returnExistenceState(simShortList.avatars[i]);
@@ -1532,7 +1489,6 @@ filterUtils = function() {
                 break;
 
             case "FOUND":
-
                 for (let i = 0; i < simShortList.avatars.length; i++) {
                     let existence = simUtils.returnExistenceState(simShortList.avatars[i]);
                     if (existence == "LANDED_HIDDEN") longList.push(simLongList.avatars[i]);
@@ -1540,7 +1496,6 @@ filterUtils = function() {
                 break;
 
             case "UNFOUND":
-
                 for (let i = 0; i < simShortList.avatars.length; i++) {
 
                     let isPrivate = simShortList.avatars[i].privacy_mode;
@@ -1550,7 +1505,6 @@ filterUtils = function() {
                 break;
 
             case "FLOATING":
-
                 for (let i = 0; i < simShortList.avatars.length; i++) {
                     let existence = simUtils.returnExistenceState(simShortList.avatars[i]);
                     if (existence == "FLOATING") longList.push(simLongList.avatars[i]);
@@ -1558,7 +1512,6 @@ filterUtils = function() {
                 break;
 
             case "LANDED":
-
                 for (let i = 0; i < simShortList.avatars.length; i++) {
                     let existence = simUtils.returnExistenceState(simShortList.avatars[i]);
                     if (existence == "LANDED") longList.push(simLongList.avatars[i]);
@@ -1566,7 +1519,6 @@ filterUtils = function() {
                 break;
 
             case "WORKING":
-
                 for (let i = 0; i < simShortList.avatars.length; i++) {
                     let existence = simUtils.returnExistenceState(simShortList.avatars[i]);
                     if (existence == "WORKING") longList.push(simLongList.avatars[i]);
@@ -1574,7 +1526,6 @@ filterUtils = function() {
                 break;
 
             case "STAFF":
-
                 for (let i = 0; i < simShortList.avatars.length; i++) {
                     if (simUtils.isSimStaffMember(simShortList.avatars[i].name)) longList.push(simLongList.avatars[i]);
                 }
@@ -1590,7 +1541,6 @@ filterUtils = function() {
     function returnFilterLotList(filter) {
 
         let shortList = new Array();
-
         for (let i = 0; i < simDataHolder.lotShortList.lots.length; i++) {
 
             if (simDataHolder.lotShortList.lots[i].category == LOT_SEARCH_ID[filter]) shortList.push(simDataHolder.lotShortList.lots[i]);
@@ -1599,7 +1549,7 @@ filterUtils = function() {
     }
 
     //#region Filter Icons
-    // Populate filter buttons
+    // Populate filter buttons (TODO: make less hacky, less magic variables)
     function fillButtonGraphics() {
 
         const lotFilterArray = document.getElementById("lot-filter-array");
@@ -1607,22 +1557,20 @@ filterUtils = function() {
     
         for (let i = 0; i < 12; i++) {
     
-            let button = document.createElement("button");
-    
             var x = (i % 4) * 71;
             var y = Math.floor(i / 4) * 71;
-            button.style.background = "url(./images/filter-spritesheets/lot-filter.png?v0.2.4e) " + -x + "px " + -y + "px";
+            let button = document.createElement("button");
+            button.style.background = `url(${RES_LOT_FILTER}) ${-x}px ${-y}px`;
     
             addFilterClasses(button, "lot");
             lotFilterArray.append(button);
         }
         for (let i = 0; i < 12; i++) {
     
-            let button = document.createElement("button");
-    
             var x = (i % 4) * 71;
             var y = Math.floor(i / 4) * 71;
-            button.style.background = "url(./images/filter-spritesheets/sim-filter.png?v0.2.4e) " + -x + "px " + -y + "px";
+            let button = document.createElement("button");
+            button.style.background = `url(${RES_SIM_FILTER}) ${-x}px ${-y}px`;
     
             addFilterClasses(button, "sim");
             simFilterArray.append(button);
@@ -1664,21 +1612,20 @@ filterUtils = function() {
     function mouseOverFilterChange(button, action, type) {
 
         const index = Array.from(button.parentElement.children).indexOf(button);
-    
         var x = (index % 4) * 71;
         var y = Math.floor(index / 4) * 71;
-    
+
         if (type == "lot") {
     
             if (button.classList.contains("lot-filter-active")) return;
     
             if (action == "in") {
             
-                button.style.background = "url(./images/filter-spritesheets/lot-filter-hover.png?v0.2.4e) " + -x + "px " + -y + "px";
+                button.style.background = `url(${RES_LOT_FILTER_HOVER}) ${-x}px ${-y}px`;
             }
             else if (action == "out") {
     
-                button.style.background = "url(./images/filter-spritesheets/lot-filter.png?v0.2.4e) " + -x + "px " + -y + "px";
+                button.style.background = `url(${RES_LOT_FILTER}) ${-x}px ${-y}px`;
             }
         }
         else if (type == "sim") {
@@ -1687,11 +1634,11 @@ filterUtils = function() {
     
             if (action == "in") {
             
-                button.style.background = "url(./images/filter-spritesheets/sim-filter-hover.png?v0.2.4e) " + -x + "px " + -y + "px";
+                button.style.background = `url(${RES_SIM_FILTER_HOVER}) ${-x}px ${-y}px`;
             }
             else if (action == "out") {
     
-                button.style.background = "url(./images/filter-spritesheets/sim-filter.png?v0.2.4e) " + -x + "px " + -y + "px";
+                button.style.background = `url(${RES_SIM_FILTER}) ${-x}px ${-y}px`;
             }
         }
     }
@@ -1703,7 +1650,6 @@ filterUtils = function() {
         filterArray = button.parentElement;
     
         var count = 0;
-    
         if (type == "lot") {
     
             var sameButton = (button.classList.contains("lot-filter-active"));
@@ -1712,11 +1658,10 @@ filterUtils = function() {
                 button.classList.remove("lot-filter-active");
                 var x = (count % 4) * 71;
                 var y = Math.floor(count / 4) * 71;
-                button.style.background = "url(./images/filter-spritesheets/lot-filter.png?v0.2.4e) " + -x + "px " + -y + "px";
+                button.style.background = `url(${RES_LOT_FILTER}) ${-x}px ${-y}px`;
         
                 count++;
             }
-            // If already selected, deselect and reset filter
             if (sameButton) {
 
                 writeFilterToTable("lot", "REMOVE");
@@ -1725,7 +1670,7 @@ filterUtils = function() {
             else {
                 var x = (index % 4) * 71;
                 var y = Math.floor(index / 4) * 71;
-                button.style.background = "url(./images/filter-spritesheets/lot-filter-selected.png?v0.2.4e) " + -x + "px " + -y + "px";
+                button.style.background = `url(${RES_LOT_FILTER_SELECTED}) ${-x}px ${-y}px`;
                 button.classList.add("lot-filter-active");
                 writeFilterToTable("lot", index);
                 simDataHolder.lotFilter = index;
@@ -1740,8 +1685,8 @@ filterUtils = function() {
                 button.classList.remove("sim-filter-active");
                 var x = (count % 4) * 71;
                 var y = Math.floor(count / 4) * 71;
-                button.style.background = "url(./images/filter-spritesheets/sim-filter.png?v0.2.4e) " + -x + "px " + -y + "px";
-        
+                button.style.background = `url(${RES_SIM_FILTER}) ${-x}px ${-y}px`;
+
                 count++;
             }
             if (sameButton) {
@@ -1753,7 +1698,7 @@ filterUtils = function() {
     
                 var x = (index % 4) * 71;
                 var y = Math.floor(index / 4) * 71;
-                button.style.background = "url(./images/filter-spritesheets/sim-filter-selected.png?v0.2.4e) " + -x + "px " + -y + "px";
+                button.style.background = `url(${RES_SIM_FILTER_SELECTED}) ${-x}px ${-y}px`;
                 button.classList.add("sim-filter-active");
                 writeFilterToTable("sim", SIM_FILTER_KEYS[index]);
                 simDataHolder.simFilter = index;
@@ -1784,7 +1729,6 @@ searchUtils = function() {
         let simName = GUI_SEARCH_SIM.value;
         if (simName == "") return;
 
-        // Check if simlong in cache
         let simLong;
         if (!simUtils.checkIfSimInLongCache(simName)) {
 
@@ -1802,17 +1746,11 @@ searchUtils = function() {
             apiUtils.sendSimEntityAnalytics(simLong.name, simLong.avatar_id);
             simDataHolder.offlineLongSimList.push(simLong);
         }
-        else {
-
-            // If sim cached, return from cache
-            simLong = simUtils.returnSimFromLongCache(simName);
-        }
+        else simLong = simUtils.returnSimFromLongCache(simName);
 
         // Get searched sim data
         let simShort = simUtils.returnShortSimFromLong(simLong);
         let existence = simUtils.returnExistenceState(simShort);
-
-        // Write to sim bio
         guiUtils.writeGreaterSimContext(simShort, simLong, existence);
     }
 
@@ -1854,8 +1792,6 @@ searchUtils = function() {
         let lotPopulation = (("error") in lotShort) ? 0 : lotShort.avatars_in_lot;
         GUI_SIMS_IN_LOT.style.display = "flex";
         guiUtils.writeSimsInLot(lotLong, lotPopulation);
-
-        // Hide irrelevant gui elements
         GUI_SIM_VIEW.style.display = "none";
     }
 
@@ -1867,12 +1803,14 @@ searchUtils = function() {
 
 sidebarUtils = function() {
 
+    // Update clock/job bar with active time/jobs
     function updateSidebar() {
 
         writeSimClock();
         writeActiveJobs();
     }
 
+    // Open sidebar with css animation
     function expandSidebar() {
 
         // Do animation for expanding/retracting sidebar window
@@ -1902,18 +1840,13 @@ sidebarUtils = function() {
         }
     }
 
+    // Toggle visibility of sidebar elements when hidden/shown
     function toggleSidebarElements(visibility) {
 
         // Hide/show sidebar elements
         const toggleElements = document.getElementsByClassName("sidebar-hide");
-        if (visibility == "hide") {
-
-            for (let i = 0; i < toggleElements.length; i++) toggleElements[i].style.display = "none";
-        }
-        else if (visibility == "show") {
-
-            for (let i = 0; i < toggleElements.length; i++) toggleElements[i].style.display = "block";
-        }
+        if (visibility == "hide") for (let i = 0; i < toggleElements.length; i++) toggleElements[i].style.display = "none";
+        else if (visibility == "show") for (let i = 0; i < toggleElements.length; i++) toggleElements[i].style.display = "block";
     }
 
     // Format to sim-time and write to clock
@@ -1942,16 +1875,14 @@ sidebarUtils = function() {
 
         // Get open jobs
         let jobsActive = simUtils.returnJobsOpen();
-
-        // Set job icon to inactive
-        SIDEBAR_JOB_FACTORY.style.background = "url(./images/buttons/jobs-active.png?v0.2.4e) 40px 0";
-        SIDEBAR_JOB_DINER.style.background = "url(./images/buttons/jobs-active.png?v0.2.4e) 40px 80px";
-        SIDEBAR_JOB_CLUB.style.background = "url(./images/buttons/jobs-active.png?v0.2.4e) 40px 40px";
+        SIDEBAR_JOB_FACTORY.style.background = `url(${RES_JOBS_ACTIVE}) 40px 0`;
+        SIDEBAR_JOB_DINER.style.background = `url(${RES_JOBS_ACTIVE}) 40px 80px`;
+        SIDEBAR_JOB_CLUB.style.background = `url(${RES_JOBS_ACTIVE}) 40px 40px`;
 
         // Set active jobs to active icon
-        if (jobsActive.includes(1)) SIDEBAR_JOB_FACTORY.style.background = "url(./images/buttons/jobs-active.png?v0.2.4e) 0 0";
-        if (jobsActive.includes(2)) SIDEBAR_JOB_DINER.style.background = "url(./images/buttons/jobs-active.png?v0.2.4e) 0 80px";
-        if (jobsActive.includes(4)) SIDEBAR_JOB_CLUB.style.background = "url(./images/buttons/jobs-active.png?v0.2.4e) 0 40px";
+        if (jobsActive.includes(1)) SIDEBAR_JOB_FACTORY.style.background = `url(${RES_JOBS_ACTIVE}) 0 0`;
+        if (jobsActive.includes(2)) SIDEBAR_JOB_DINER.style.background = `url(${RES_JOBS_ACTIVE}) 0 80px`;
+        if (jobsActive.includes(4)) SIDEBAR_JOB_CLUB.style.background = `url(${RES_JOBS_ACTIVE}) 0 40px`;
     }
 
     // Write about info in sidebar info panel 
@@ -1974,15 +1905,17 @@ sidebarUtils = function() {
 
 simModuleUtils = function() {
 
+    // Build and return a market-data object based on current active sims
     function returnMarketObject(simLong, simShort, lotShort) {
 
         let marketObject = new MarketObject(simLong, simShort, lotShort);
         return marketObject;
     }
 
+    // Populates market watch module (currently disabled)
     function writeMarketWatch(marketObj) {
 
-        // Write market breakdown text
+        // Market breakdown text block
         let breakdownText = `$${(marketObj.moneyPerHourJob + marketObj.moneyPerHourSMO).toLocaleString("en-US")} Generated Per Hour\n\n` + 
                             `SMO Total $/Hr: $${marketObj.moneyPerHourSMO.toLocaleString("en-US")}\n` + 
                             `${marketObj.simsSMO} Sims at ${marketObj.moneyLots.length} Money Lot${(marketObj.moneyLots.length > 1) ? "s" : ""}\n\n` +
@@ -2003,18 +1936,19 @@ simModuleUtils = function() {
         GUI_MARKET_HOTSPOTS.textContent = hotspotText;
     }
 
+    // Write SMO percentages to module
     function writeSMOPercentages(percentageData) {
 
-        for (let smoName in percentageData) {
+        let sortedValues = Object.keys(percentageData).sort(function(a, b){return percentageData[b] - percentageData[a]});
+        for (let i = 0; i < sortedValues.length; i++) {
 
-            console.log(smoName, percentageData[smoName]);
-
+            smoName = sortedValues[i];
             let smoEntry = buildSMOPEntry(smoName, percentageData[smoName]);
-
             SMO_PERCENTAGES_DIV.appendChild(smoEntry);
         }
     }
 
+    // Construct %-bar element and style accordingly
     function buildSMOPEntry(objectName, objectPercentage) {
 
         objectPercentage = Math.ceil(100 * objectPercentage);
@@ -2051,13 +1985,12 @@ simModuleUtils = function() {
         return newEntry;
     }
 
+    // Find color of SMO % bar based on fillage
     function findPercentageColor(smoPercentage) {
 
         // Default colors only differ in hue, in the future this should probably be expanded for full HSL
         let hue = (((smoPercentage - 50) / 100) * (SMO_BAR_GREEN[0] - SMO_BAR_RED[0])) + SMO_BAR_RED[0];
         let color = [hue, SMO_BAR_GREEN[1], SMO_BAR_GREEN[2]];
-
-        console.log(color)
 
         return color;
     }
@@ -2072,31 +2005,30 @@ simModuleUtils = function() {
 apiUtils = function() {
 
     //#region API Fetching
+    // Return json of latest simfinder commit
     async function returnGitCommitJson() {
 
-        const apiLink = "https://api.github.com/repos/sam-chug/dramaso-simfinder/branches/master";
-
         let obj;
-        const res = await fetch(apiLink);
+        const res = await fetch(RECENT_COMMIT_URL);
         obj = await res.json();
 
-        console.log("%cFetching Last Sim Finder Commit:\n\n", "color: white; background-color: darkgreen;", apiLink);
+        console.log("%cFetching Last Sim Finder Commit:\n\n", "color: white; background-color: darkgreen;", RECENT_COMMIT_URL);
         
         return obj;
     }
 
+    // Fetches staff names from defined url
     async function getDBLookupData() {
 
-        const apiLink = "https://raw.githubusercontent.com/Sam-Chug/sim-finder-data/main/staff-names";
-
         let obj;
-        const res = await fetch(apiLink);
+        const res = await fetch(STAFF_LIST_URL);
         obj = await res.json();
-        console.log("%cFetching Sim Finder Lookup Data:\n\n", "color: white; background-color: darkgreen;", apiLink);
+        console.log("%cFetching Sim Finder Lookup Data:\n\n", "color: white; background-color: darkgreen;", STAFF_LIST_URL);
         
         return obj;
     }
 
+    // Return an object fetched from given link
     async function getAPIData (apiLink) {
         
         // Clean link
@@ -2113,9 +2045,10 @@ apiUtils = function() {
     }
     //#endregion
 
+    // Clean link of any crap that might fog a url
+    // TODO: this shouldn't be needed, I'm just stupid. Should fix.
     function cleanLink(linkText) {
 
-        // Catches for conditionals I'm too stupid to fix in a good way
         if (linkText.includes("(Maybe Hosting)")) linkText = linkText.replace(" (Maybe Hosting)", "");
         if (linkText.includes("🎂")) linkText = linkText.replace(" 🎂", "");
         if (linkText.includes("🔧")) linkText = linkText.replace(" 🔧", "");
@@ -2125,6 +2058,7 @@ apiUtils = function() {
     }
 
     //#region Analytics
+    // Logs sim-lookups by simname and id
     function sendSimEntityAnalytics(fetchedSimName, fetchedSimID) {
 
         gtag('event', 'api_sim_fetch', {
@@ -2133,6 +2067,7 @@ apiUtils = function() {
         });
     }
 
+    // Logs lot-lookups by lotname and id
     function sendLotEntityAnalytics(fetchedLotName, fetchedLotID) {
 
         gtag('event', 'api_lot_fetch', {
@@ -2141,6 +2076,7 @@ apiUtils = function() {
         });
     }
 
+    // Logs bookmarks by name, id, and bookmarked (yes/no)
     function sendBookmarkAnalytics(bookmarked, entityName, entityID) {
 
         gtag('event', 'bookmark_change', {
@@ -2156,33 +2092,27 @@ apiUtils = function() {
     function buildLongSimLinkFromID(idList) {
 
         let simIdString = "https://api.dramaso.org/userapi/avatars?ids=";
-        for (i = 0; i < idList.length; i++) {
-        
-            simIdString += idList[i] + ",";
-        }
+        for (i = 0; i < idList.length; i++) simIdString += idList[i] + ",";
+
         simIdString = simIdString.slice(0, -1);
         return simIdString;
     }
 
+    // Builds api lookup link from list of avatar ids
     function buildLongSimLink(simList) {
 
         let simIdString = "https://api.dramaso.org/userapi/avatars?ids=";
-        for (i = 0; i < simList.avatars.length; i++) {
-    
-            simIdString += simList.avatars[i].avatar_id + ",";
-        }
+        for (i = 0; i < simList.avatars.length; i++) simIdString += simList.avatars[i].avatar_id + ",";
     
         simIdString = simIdString.slice(0, -1);
         return simIdString;
     }
 
+    // Builds api lookup link from list of lot ids
     function buildLongLotLink(lotList) {
 
         let lotIDString = "https://api.dramaso.org/userapi/lots?ids=";
-        for (i = 0; i < lotList.lots.length; i++) {
-    
-            lotIDString += lotList.lots[i].lot_id + ",";
-        }
+        for (i = 0; i < lotList.lots.length; i++) lotIDString += lotList.lots[i].lot_id + ",";
     
         lotIDString = lotIDString.slice(0, -1);
         return lotIDString;
@@ -2192,10 +2122,7 @@ apiUtils = function() {
     function buildRoommateLink(longLot) {
 
         let roommateIDString = "https://api.dramaso.org/userapi/avatars?ids=";
-        for (i = 0; i < longLot.roommates.length; i++) {
-
-            roommateIDString += longLot.roommates[i] + ",";
-        }
+        for (i = 0; i < longLot.roommates.length; i++) roommateIDString += longLot.roommates[i] + ",";
 
         roommateIDString = roommateIDString.slice(0, -1);
         return roommateIDString;
@@ -2219,7 +2146,7 @@ apiUtils = function() {
 
 storageUtils = function() {
 
-    // TODO: This is messy, try to merge with setDefaultStorage
+    // Set default user settings
     function setDefaultSettings() {
 
         // Check if user settings empty
@@ -2230,6 +2157,7 @@ storageUtils = function() {
         localStorage.setItem(SETTINGS_KEY, JSON.stringify(new UserSetting()));
     }
 
+    // Get user settings from local storage
     function returnSettings() {
 
         if (checkIfSettingsEmpty()) setDefaultSettings();
@@ -2238,11 +2166,13 @@ storageUtils = function() {
         return settingObject;
     }
 
+    // Check if user settings exist in localstorage
     function checkIfSettingsEmpty() {
 
         return (JSON.parse(localStorage.getItem(SETTINGS_KEY) == null));
     }
 
+    // Check if localstorage is empty
     function checkIfStorageEmpty(storageKey) {
 
         // If storage empty or sim ID list is empty
@@ -2250,6 +2180,7 @@ storageUtils = function() {
         JSON.parse(localStorage.getItem(storageKey)).simID.length == 0);
     }
 
+    // Set default sim bookmark in localstorage
     function setDefaultStorage(storageKey) {
 
         // If storage is not empty, return
@@ -2263,11 +2194,13 @@ storageUtils = function() {
         localStorage.setItem(storageKey, JSON.stringify(initStorage));
     }
 
+    // Remove storage key from localstorage
     function removeStorageKey(storageKey) {
 
         localStorage.removeItem(storageKey);
     }
 
+    // Change the key of an item in localstorage
     function changeStorageKey(oldKey, newKey) {
 
         let oldStorageEmpty = checkIfStorageEmpty(oldKey);
@@ -2287,11 +2220,13 @@ storageUtils = function() {
         }
     }
 
+    // Save key/data to localstorage
     function saveStorage(storageKey, storageString) {
 
         localStorage.setItem(storageKey, storageString);
     }
 
+    // Add bookmark to localstorage list
     function addBookmark(addID) {
 
         // Get bookmark storage, append new bookmark
@@ -2303,6 +2238,7 @@ storageUtils = function() {
         saveStorage(STORAGE_BOOKMARK_KEY, storageString);
     }
 
+    // Remove bookmark from localstorage list
     function deleteBookmark(deleteID) {
 
         // Get bookmark storage
@@ -2310,15 +2246,14 @@ storageUtils = function() {
 
         // Remove id from bookmarks
         let index = bookmarkStorage.simID.indexOf(deleteID);
-        if (index > -1) {
-            bookmarkStorage.simID.splice(index, 1);
-        }
+        if (index > -1) bookmarkStorage.simID.splice(index, 1);
         
         // Save local storage
         let storageString = JSON.stringify(bookmarkStorage);
         saveStorage(STORAGE_BOOKMARK_KEY, storageString);
     }
 
+    // Get storageKey from localstorage
     function returnLocalStorage(storageKey) {
 
         // If storage empty, set default storage
@@ -2329,6 +2264,7 @@ storageUtils = function() {
         return simIDObject;
     }
 
+    // Export bookmarks from localstorage
     function exportLocalStorage(storageKey) {
 
         let dateObj = simUtils.returnDateObjectFromUNIX(Date.now() / 1000);
@@ -2346,6 +2282,7 @@ storageUtils = function() {
         downloadAnchorNode.remove();
     }
 
+    // Import bookmarks to localstorage
     function importLocalStorage(storageKey) {
 
         // Open file dialog
@@ -2376,8 +2313,6 @@ storageUtils = function() {
 
                 // Check validity of imported bookmarks
                 let validImport = checkImportValidity(contentObject);
-
-                // If import valid
                 if (validImport) {
 
                     // Set item and reload page
@@ -2385,25 +2320,19 @@ storageUtils = function() {
                     alert("Bookmarks imported, press OK to reload page.");
                     location.reload();
                 }
-                // Else, alert user
-                else {
-
-                    alert("The file you are importing is invalid. Reverting to previous bookmarks.");
-                }
+                else alert("The file you are importing is invalid. Reverting to previous bookmarks.");
             }
         }
     }
 
+    // Check validity of imported bookmarks list
     function checkImportValidity(importObj) {
 
         // Check if import has idList attribute
         if (!importObj.hasOwnProperty("simID")) return false;
 
         // Check if all entries in idList are integers
-        for (let i = 0; i < importObj.simID.length; i++) {
-
-            if (!Number.isInteger(importObj.simID[i])) return false;
-        }
+        for (let i = 0; i < importObj.simID.length; i++) if (!Number.isInteger(importObj.simID[i])) return false;
 
         // Return true if checks are passed
         return true;
