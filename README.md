@@ -1,8 +1,6 @@
 # Sim Finder
 
-### FreeSO Dashboard for both Sims and Houses
- 
-The Sim Finder is an interactive dashboard where you can view both sim and house data on [FreeSO](https://github.com/riperiperi/FreeSO). The Sim Finder aims to improve on aspects lacking by the previous [dashboard](https://dashboard.thecode.house/), adding many new ease-of-use and helpful features.
+### DramaSO Dashboard for both Sims and Houses
 
 # Features
 - View information from any sim or house
