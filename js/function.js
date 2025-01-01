@@ -1972,7 +1972,7 @@ sidebarUtils = function() {
     }
 }();
 
-marketWatchUtils = function() {
+simModuleUtils = function() {
 
     function returnMarketObject(simLong, simShort, lotShort) {
 
@@ -2003,9 +2003,69 @@ marketWatchUtils = function() {
         GUI_MARKET_HOTSPOTS.textContent = hotspotText;
     }
 
+    function writeSMOPercentages(percentageData) {
+
+        for (let smoName in percentageData) {
+
+            console.log(smoName, percentageData[smoName]);
+
+            let smoEntry = buildSMOPEntry(smoName, percentageData[smoName]);
+
+            SMO_PERCENTAGES_DIV.appendChild(smoEntry);
+        }
+    }
+
+    function buildSMOPEntry(objectName, objectPercentage) {
+
+        objectPercentage = Math.ceil(100 * objectPercentage);
+
+        // SMO bar graphic
+        let smoBar = document.createElement("div");
+        smoBar.classList += "smo-bar";
+
+        let smoBarText = document.createElement("p");
+        smoBarText.classList += "smo-text";
+        smoBarText.textContent = `${objectPercentage}%`;
+
+        let smoBarGraphic = document.createElement("div");
+        smoBarGraphic.classList += "smo-bar-graphic";
+        smoBarGraphic.style.height = `${((objectPercentage / 150) * 100) - 15}%`;
+        let barColor = findPercentageColor(objectPercentage);
+        smoBarGraphic.style.backgroundColor = `hsl(${barColor[0]}, ${barColor[1]}%, ${barColor[2]}%)`;
+
+        // SMO Name
+        let smoName = document.createElement("p");
+        smoName.textContent = objectName;
+        smoName.classList += "smo-text";
+        
+        // Create array entry
+        let newEntry = document.createElement("div");
+        newEntry.classList += "smo-column";
+
+        smoBar.appendChild(smoBarText);
+        smoBar.appendChild(smoBarGraphic);
+
+        newEntry.appendChild(smoBar);
+        newEntry.appendChild(smoName);
+
+        return newEntry;
+    }
+
+    function findPercentageColor(smoPercentage) {
+
+        // Default colors only differ in hue, in the future this should probably be expanded for full HSL
+        let hue = (((smoPercentage - 50) / 100) * (SMO_BAR_GREEN[0] - SMO_BAR_RED[0])) + SMO_BAR_RED[0];
+        let color = [hue, SMO_BAR_GREEN[1], SMO_BAR_GREEN[2]];
+
+        console.log(color)
+
+        return color;
+    }
+
     return {
         returnMarketObject: returnMarketObject,
-        writeMarketWatch: writeMarketWatch
+        writeMarketWatch: writeMarketWatch,
+        writeSMOPercentages: writeSMOPercentages
     }
 }();
 
@@ -2043,7 +2103,7 @@ apiUtils = function() {
         apiLink = cleanLink(apiLink);
 
         let obj;
-        const res = await fetch(apiLink);
+        const res = await fetch(apiLink, {mode: 'cors', headers: {'Access-Control-Allow-Origin':'*'}});
         obj = await res.json();
     
         console.log("%cFetching Api Data:\n\n", "color: white; background-color: green;", apiLink);

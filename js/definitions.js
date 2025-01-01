@@ -5,6 +5,8 @@ const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
 const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
 
 const NEWSPAPER_URL = "https://www.dramaso.org/newspaper.php?newspaper=1";
+const NEWSPAPER_PLACEHOLDER = {"Writer":"1.5","Easel":"1.35","Board":"1.20","Jam":"1.05","Potion":"0.90","Gnome":"0.75","Pinata":"0.60","Phone":"0.50"};
+const USE_NEWSPAPER_PLACEHOLDER = true;
 
 // TODO: Most of these can be replaced with json's with keys
 
@@ -133,6 +135,9 @@ const LOT_FILTER_TOOLTIP = [
 //#endregion
 
 //#region Misc
+const SMO_BAR_RED = [10, 100, 50];
+const SMO_BAR_GREEN = [180, 100, 50];
+
 const CONFETTI_SPAWN_COUNT = 128;
 
 const MAX_STYLES = 10; // Maximum styles to loop through
@@ -188,6 +193,8 @@ const GUI_LOT_THUMBNAIL_BG = document.getElementById('lot-thumbnail-bg');
 const GUI_LOT_LABEL = document.getElementById('thumbnail-title');
 const GUI_LOT_DESCRIPTION = document.getElementById('thumbnail-desc-content');
 const GUI_LOT_BIO = document.getElementById('thumbnail-lot-bio');
+
+const SMO_PERCENTAGES_DIV = document.getElementById('smo-breakdown');
 
 const GUI_SIMS_IN_LOT_LABEL = document.getElementById('lot-sims-in-lot-title');
 const GUI_SIMS_IN_LOT = document.getElementById('show-sims-in-lot');

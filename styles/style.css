@@ -1031,6 +1031,44 @@ body {
 }
 /* #endregion */
 
+/* #region SMO Percentages */
+.smo-div * {
+    /* outline: 2px solid green; */
+}
+
+.smo-div {
+    flex-grow: 1;
+    min-height: 200px;
+
+    display: flex;
+}
+
+.smo-column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    margin: 2px;
+}
+
+.smo-text {
+    text-align: center;
+}
+
+.smo-bar {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+
+    justify-content: space-between;
+}
+
+.smo-bar-graphic {
+    /* outline: 1px solid red; */
+    margin: 2px;
+    height: 100%;
+}
+/* #endregion */
+
 /* #region Market Watch */
 .div-market-watch {
     display: flex;
