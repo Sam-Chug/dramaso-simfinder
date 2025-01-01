@@ -1,5 +1,5 @@
 //#region Strings
-const VERSION_STR = "v0.2.4c";
+const VERSION_STR = "v0.2.4d";
 
 const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
 const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
@@ -257,10 +257,10 @@ const CONFETTI_DATA = {
 const CUSTOM_STYLE_REAGAN = "Reaganomics Lamborghini";
 
 const CUSTOM_STYLE_SIMHEADS = {
-    male: "./images/sim-faces/simface-m.png?v0.2.4c",
-    female: "./images/sim-faces/simface-f.png?v0.2.4c",
-    reagan: "./images/sim-faces/simface-rea.png?v0.2.4c",
-    bear: "./images/sim-faces/simface-b.png?v0.2.4c"
+    male: "./images/sim-faces/simface-m.png?v0.2.4d",
+    female: "./images/sim-faces/simface-f.png?v0.2.4d",
+    reagan: "./images/sim-faces/simface-rea.png?v0.2.4d",
+    bear: "./images/sim-faces/simface-b.png?v0.2.4d"
 };
 const CUSTOM_STYLE_BLOCK = {
     bp: {
