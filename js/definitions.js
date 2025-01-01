@@ -1,10 +1,12 @@
-//#region Strings
+
 const VERSION_STR = "v0.2.4e";
 
 const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
 const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
 
 const NEWSPAPER_URL = "https://www.dramaso.org/newspaper.php?newspaper=1";
+
+//#region Strings
 
 // List of known staff sims
 var STAFF_NAMES;
@@ -135,15 +137,11 @@ const SMO_BAR_RED = [10, 100, 50];
 const SMO_BAR_GREEN = [180, 100, 50];
 
 const CONFETTI_SPAWN_COUNT = 128;
-
 const MAX_STYLES = 10; // Maximum styles to loop through
 
-//TODO: change to "simfinder-id-list"
 const STORAGE_BOOKMARK_KEY = "dramaso-idList";
 const STORAGE_BOOKMARK_KEY_OLD = "dramaso-idList";
-
 const STORAGE_BOOKMARK_CACHE_KEY = "dramaso-idList-cache";
-
 const SETTINGS_KEY = "dramaso-settings";
 //#endregion
 
@@ -231,6 +229,23 @@ const GUI_IMPORT_BUTTON = document.getElementById('import-button');
 
 const GUI_BOOKMARK_LABEL = document.getElementById('bookmark-label');
 const GUI_COLORMODE_BUTTON = document.getElementById('colormode-button');
+//#endregion
+
+//#region Image paths
+const RES_NAMESORT_SELECTED = "./images/buttons/name-sort-selected.png?v0.2.4e";
+const RES_NAMESORT_DESELECTED = "./images/buttons/name-sort.png?v0.2.4e";
+
+const RES_UNKNOWN_LOT = "./images/unknown.png?v0.2.4e";
+
+const RES_JOBS_ACTIVE = "./images/buttons/jobs-active.png?v0.2.4e";
+
+const RES_LOT_FILTER = "./images/filter-spritesheets/lot-filter.png?v0.2.4e";
+const RES_LOT_FILTER_HOVER = "./images/filter-spritesheets/lot-filter-hover.png?v0.2.4e";
+const RES_LOT_FILTER_SELECTED = "./images/filter-spritesheets/lot-filter-selected.png?v0.2.4e";
+
+const RES_SIM_FILTER = "./images/filter-spritesheets/sim-filter.png?v0.2.4e";
+const RES_SIM_FILTER_HOVER = "./images/filter-spritesheets/sim-filter-hover.png?v0.2.4e";
+const RES_SIM_FILTER_SELECTED = "./images/filter-spritesheets/sim-filter-selected.png?v0.2.4e";
 //#endregion
 
 //#region Sim style lists

@@ -8,6 +8,8 @@ Bugs:
     - Confetti animation is odd when spamming
     
 v0.2.5 TODO:
+    - Change all image paths to const variables
+    - Update staff list
     - Add day age to lots in lot view, or remove birthday emoji from lot list
     - Show count of how many sims are at the same job lot (out-of-range locations still match up)
     - Style editor
