@@ -8,8 +8,6 @@ const NEWSPAPER_URL = "https://www.dramaso.org/newspaper.php?newspaper=1";
 const NEWSPAPER_PLACEHOLDER = {"Writer":"1.5","Easel":"1.35","Board":"1.20","Jam":"1.05","Potion":"0.90","Gnome":"0.75","Pinata":"0.60","Phone":"0.50"};
 const USE_NEWSPAPER_PLACEHOLDER = false;
 
-// TODO: Most of these can be replaced with json's with keys
-
 // List of known staff sims
 var STAFF_NAMES;
 var PAYMENT_DATA;
