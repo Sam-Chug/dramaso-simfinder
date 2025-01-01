@@ -1,10 +1,15 @@
-
 const VERSION_STR = "v0.2.4e";
 
+//#region API Links
 const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
 const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
 
+const STAFF_LIST_URL = "https://raw.githubusercontent.com/Sam-Chug/sim-finder-data/refs/heads/main/dramaso/dso-staff-names.txt";
+const RECENT_COMMIT_URL = "https://api.github.com/repos/sam-chug/dramaso-simfinder/branches/master";
+
 const NEWSPAPER_URL = "https://www.dramaso.org/newspaper.php?newspaper=1";
+//#endregion
+
 
 //#region Strings
 

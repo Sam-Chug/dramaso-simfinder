@@ -2006,26 +2006,22 @@ apiUtils = function() {
     // Return json of latest simfinder commit
     async function returnGitCommitJson() {
 
-        const apiLink = "https://api.github.com/repos/sam-chug/dramaso-simfinder/branches/master";
-
         let obj;
-        const res = await fetch(apiLink);
+        const res = await fetch(RECENT_COMMIT_URL);
         obj = await res.json();
 
-        console.log("%cFetching Last Sim Finder Commit:\n\n", "color: white; background-color: darkgreen;", apiLink);
+        console.log("%cFetching Last Sim Finder Commit:\n\n", "color: white; background-color: darkgreen;", RECENT_COMMIT_URL);
         
         return obj;
     }
 
-    // Fetch archived database
+    // Fetches staff names from defined url
     async function getDBLookupData() {
 
-        const apiLink = "https://raw.githubusercontent.com/Sam-Chug/sim-finder-data/main/staff-names";
-
         let obj;
-        const res = await fetch(apiLink);
+        const res = await fetch(STAFF_LIST_URL);
         obj = await res.json();
-        console.log("%cFetching Sim Finder Lookup Data:\n\n", "color: white; background-color: darkgreen;", apiLink);
+        console.log("%cFetching Sim Finder Lookup Data:\n\n", "color: white; background-color: darkgreen;", STAFF_LIST_URL);
         
         return obj;
     }

@@ -19,12 +19,10 @@ simFinderMain = function() {
         simDataHolder.userSetting = storageUtils.returnSettings();
         domUtils.siteColorMode(simDataHolder.userSetting.colorMode);
 
-        // Fetch online data
         console.time("Fetching data from API");
         await getOnlineData();
         console.timeEnd("Fetching data from API");
 
-        // Populate GUI
         console.time("Populating GUI")
         populateGui();
         console.timeEnd("Populating GUI");
@@ -58,15 +56,13 @@ simFinderMain = function() {
         simDataHolder.lotLongList = lotLongList;
         simDataHolder.bookmarkList = bookmarkList;
 
-        // Get market watch data
+        // Get data for modules
+        simDataHolder.payoutData = await apiUtils.getAPIData(NEWSPAPER_URL);
         simDataHolder.marketData = simModuleUtils.returnMarketObject(
             simDataHolder.simLongList, 
             simDataHolder.simShortList, 
             simDataHolder.lotShortList
         );
-
-        // Get SMO Percentages
-        simDataHolder.payoutData = await apiUtils.getAPIData(NEWSPAPER_URL);
 
         let staffObject = await apiUtils.getDBLookupData();
         STAFF_NAMES = staffObject.staffNames;
@@ -76,24 +72,18 @@ simFinderMain = function() {
     function populateGui() {
 
         // Generate elements
-        // TODO: Move these to page start - causes error if hovered in pre-api grab
         filterUtils.fillButtonGraphics();
         domUtils.buildButtonTooltips();
 
         // Fill sim/lot lists
         guiUtils.populateSimList(simDataHolder.simLongList.avatars);
-        guiUtils.writeToLabel(`Sims Online: ${simDataHolder.simShortList.avatars_online_count}`, "sims-online-count-label");
-        
         guiUtils.populateLotList(simDataHolder.lotShortList.lots);
+        guiUtils.writeBookmarkSims(simDataHolder.bookmarkList);
+        guiUtils.writeToLabel(`Sims Online: ${simDataHolder.simShortList.avatars_online_count}`, "sims-online-count-label");
         guiUtils.writeToLabel(`Lots Online: ${simDataHolder.lotShortList.total_lots_online}`, "lots-online-count-label");
 
-        // Fill bookmark lists
-        guiUtils.writeBookmarkSims(simDataHolder.bookmarkList);
-
-        // Write market watch, disabled for now
-        // simModuleUtils.writeMarketWatch(simDataHolder.marketData);
-
-        // Write SMO Percentages
+        // Populate modules
+        // simModuleUtils.writeMarketWatch(simDataHolder.marketData); (disabled for now)
         simModuleUtils.writeSMOPercentages(simDataHolder.payoutData);
 
         // Set list sizes
