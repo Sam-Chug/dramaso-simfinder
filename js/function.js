@@ -1939,8 +1939,10 @@ simModuleUtils = function() {
     // Write SMO percentages to module
     function writeSMOPercentages(percentageData) {
 
-        for (let smoName in percentageData) {
+        let sortedValues = Object.keys(percentageData).sort(function(a, b){return percentageData[b] - percentageData[a]});
+        for (let i = 0; i < sortedValues.length; i++) {
 
+            smoName = sortedValues[i];
             let smoEntry = buildSMOPEntry(smoName, percentageData[smoName]);
             SMO_PERCENTAGES_DIV.appendChild(smoEntry);
         }
