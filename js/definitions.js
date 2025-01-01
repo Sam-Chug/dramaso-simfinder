@@ -1,10 +1,12 @@
 //#region Strings
-const VERSION_STR = "v0.2.4b";
+const VERSION_STR = "v0.2.4c";
 
 const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
 const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
 
-// TODO: Most of these can be replaced with json's with keys
+const NEWSPAPER_URL = "https://www.dramaso.org/newspaper.php?newspaper=1";
+const NEWSPAPER_PLACEHOLDER = {"Writer":"1.5","Easel":"1.35","Board":"1.20","Jam":"1.05","Potion":"0.90","Gnome":"0.75","Pinata":"0.60","Phone":"0.50"};
+const USE_NEWSPAPER_PLACEHOLDER = false;
 
 // List of known staff sims
 var STAFF_NAMES;
@@ -131,6 +133,9 @@ const LOT_FILTER_TOOLTIP = [
 //#endregion
 
 //#region Misc
+const SMO_BAR_RED = [10, 100, 50];
+const SMO_BAR_GREEN = [180, 100, 50];
+
 const CONFETTI_SPAWN_COUNT = 128;
 
 const MAX_STYLES = 10; // Maximum styles to loop through
@@ -186,6 +191,8 @@ const GUI_LOT_THUMBNAIL_BG = document.getElementById('lot-thumbnail-bg');
 const GUI_LOT_LABEL = document.getElementById('thumbnail-title');
 const GUI_LOT_DESCRIPTION = document.getElementById('thumbnail-desc-content');
 const GUI_LOT_BIO = document.getElementById('thumbnail-lot-bio');
+
+const SMO_PERCENTAGES_DIV = document.getElementById('smo-breakdown');
 
 const GUI_SIMS_IN_LOT_LABEL = document.getElementById('lot-sims-in-lot-title');
 const GUI_SIMS_IN_LOT = document.getElementById('show-sims-in-lot');
@@ -250,10 +257,10 @@ const CONFETTI_DATA = {
 const CUSTOM_STYLE_REAGAN = "Reaganomics Lamborghini";
 
 const CUSTOM_STYLE_SIMHEADS = {
-    male: "./images/sim-faces/simface-m.png?v0.2.4b",
-    female: "./images/sim-faces/simface-f.png?v0.2.4b",
-    reagan: "./images/sim-faces/simface-rea.png?v0.2.4b",
-    bear: "./images/sim-faces/simface-b.png?v0.2.4b"
+    male: "./images/sim-faces/simface-m.png?v0.2.4c",
+    female: "./images/sim-faces/simface-f.png?v0.2.4c",
+    reagan: "./images/sim-faces/simface-rea.png?v0.2.4c",
+    bear: "./images/sim-faces/simface-b.png?v0.2.4c"
 };
 const CUSTOM_STYLE_BLOCK = {
     bp: {

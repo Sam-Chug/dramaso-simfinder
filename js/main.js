@@ -59,11 +59,15 @@ simFinderMain = function() {
         simDataHolder.bookmarkList = bookmarkList;
 
         // Get market watch data
-        simDataHolder.marketData = marketWatchUtils.returnMarketObject(
+        simDataHolder.marketData = simModuleUtils.returnMarketObject(
             simDataHolder.simLongList, 
             simDataHolder.simShortList, 
             simDataHolder.lotShortList
         );
+
+        // Get SMO Percentages
+        if (!USE_NEWSPAPER_PLACEHOLDER) simDataHolder.payoutData = apiUtils.getAPIData(NEWSPAPER_URL);
+        else simDataHolder.payoutData = NEWSPAPER_PLACEHOLDER;
 
         let staffObject = await apiUtils.getDBLookupData();
         STAFF_NAMES = staffObject.staffNames;
@@ -95,8 +99,11 @@ simFinderMain = function() {
         // Fill bookmark lists
         guiUtils.writeBookmarkSims(simDataHolder.bookmarkList);
 
-        // Write market watch
-        marketWatchUtils.writeMarketWatch(simDataHolder.marketData);
+        // Write market watch, disabled for now
+        // simModuleUtils.writeMarketWatch(simDataHolder.marketData);
+
+        // Write SMO Percentages
+        simModuleUtils.writeSMOPercentages(simDataHolder.payoutData);
 
         // Set list sizes
         domUtils.sizeLists();
