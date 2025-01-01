@@ -1974,15 +1974,17 @@ sidebarUtils = function() {
 
 simModuleUtils = function() {
 
+    // Build and return a market-data object based on current active sims
     function returnMarketObject(simLong, simShort, lotShort) {
 
         let marketObject = new MarketObject(simLong, simShort, lotShort);
         return marketObject;
     }
 
+    // Populates market watch module (currently disabled)
     function writeMarketWatch(marketObj) {
 
-        // Write market breakdown text
+        // Market breakdown text block
         let breakdownText = `$${(marketObj.moneyPerHourJob + marketObj.moneyPerHourSMO).toLocaleString("en-US")} Generated Per Hour\n\n` + 
                             `SMO Total $/Hr: $${marketObj.moneyPerHourSMO.toLocaleString("en-US")}\n` + 
                             `${marketObj.simsSMO} Sims at ${marketObj.moneyLots.length} Money Lot${(marketObj.moneyLots.length > 1) ? "s" : ""}\n\n` +
@@ -2003,18 +2005,17 @@ simModuleUtils = function() {
         GUI_MARKET_HOTSPOTS.textContent = hotspotText;
     }
 
+    // Write SMO percentages to module
     function writeSMOPercentages(percentageData) {
 
         for (let smoName in percentageData) {
 
-            console.log(smoName, percentageData[smoName]);
-
             let smoEntry = buildSMOPEntry(smoName, percentageData[smoName]);
-
             SMO_PERCENTAGES_DIV.appendChild(smoEntry);
         }
     }
 
+    // Construct %-bar element and style accordingly
     function buildSMOPEntry(objectName, objectPercentage) {
 
         objectPercentage = Math.ceil(100 * objectPercentage);
@@ -2051,6 +2052,7 @@ simModuleUtils = function() {
         return newEntry;
     }
 
+    // Find color of SMO % bar based on fillage
     function findPercentageColor(smoPercentage) {
 
         // Default colors only differ in hue, in the future this should probably be expanded for full HSL
@@ -2085,6 +2087,7 @@ apiUtils = function() {
         return obj;
     }
 
+    // Fetch archival database
     async function getDBLookupData() {
 
         const apiLink = "https://raw.githubusercontent.com/Sam-Chug/sim-finder-data/main/staff-names";
@@ -2097,6 +2100,7 @@ apiUtils = function() {
         return obj;
     }
 
+    // Return an object fetched from given link
     async function getAPIData (apiLink) {
         
         // Clean link
@@ -2113,9 +2117,10 @@ apiUtils = function() {
     }
     //#endregion
 
+    // Clean link of any crap that might fog a url
+    // TODO: this shouldn't be needed, I'm just stupid. Should fix.
     function cleanLink(linkText) {
 
-        // Catches for conditionals I'm too stupid to fix in a good way
         if (linkText.includes("(Maybe Hosting)")) linkText = linkText.replace(" (Maybe Hosting)", "");
         if (linkText.includes("🎂")) linkText = linkText.replace(" 🎂", "");
         if (linkText.includes("🔧")) linkText = linkText.replace(" 🔧", "");
@@ -2125,6 +2130,7 @@ apiUtils = function() {
     }
 
     //#region Analytics
+    // Logs sim-lookups by simname and id
     function sendSimEntityAnalytics(fetchedSimName, fetchedSimID) {
 
         gtag('event', 'api_sim_fetch', {
@@ -2133,6 +2139,7 @@ apiUtils = function() {
         });
     }
 
+    // Logs lot-lookups by lotname and id
     function sendLotEntityAnalytics(fetchedLotName, fetchedLotID) {
 
         gtag('event', 'api_lot_fetch', {
@@ -2141,6 +2148,7 @@ apiUtils = function() {
         });
     }
 
+    // Logs bookmarks by name, id, and bookmarked (yes/no)
     function sendBookmarkAnalytics(bookmarked, entityName, entityID) {
 
         gtag('event', 'bookmark_change', {
@@ -2164,6 +2172,7 @@ apiUtils = function() {
         return simIdString;
     }
 
+    // Builds api lookup link from list of avatar ids
     function buildLongSimLink(simList) {
 
         let simIdString = "https://api.dramaso.org/userapi/avatars?ids=";
@@ -2176,6 +2185,7 @@ apiUtils = function() {
         return simIdString;
     }
 
+    // Builds api lookup link from list of lot ids
     function buildLongLotLink(lotList) {
 
         let lotIDString = "https://api.dramaso.org/userapi/lots?ids=";
