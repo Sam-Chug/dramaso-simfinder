@@ -20,9 +20,10 @@ main = function() {
         let lotImage = document.getElementById("lot-viewer-image");
         lotImage.src = imageSource;
 
-        // using url parameters:
-        // change tab name
-        // embed styling
+        document.title = lotData.name;
+        document.querySelector(`meta[name="og:title"]`).setAttribute("content", `${lotData.name} At DramaSO`);
+        document.querySelector(`meta[name="og:url"]`).setAttribute("content", `${siteLink}`);
+        document.querySelector(`meta[name="og:image"]`).setAttribute("content", `${imageSource}`);
     }
 
     function getSiteLink() {
