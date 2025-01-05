@@ -3,13 +3,14 @@ Sim Finder Notes
 Patchnotes v0.2.5:
     - Removed market watch (for now)
     - Added smo percentages (updates automatically)
+    - Click on lot thumbnail to open new tab with the lot image blown up
+    - Lookup sims using sim-id
     
 Bugs:
     - Confetti animation is odd when spamming
     
 v0.2.5 TODO:
-    - Click on lot thumbnail to open new tab with the lot image blown up
-    - Add day age to lots in lot view, or remove birthday emoji from lot list
+    - Re-sort sims by age, since cakes add days
     - Show count of how many sims are at the same job lot (out-of-range locations still match up)
     - Style editor
         - Either in-site or a new repo
