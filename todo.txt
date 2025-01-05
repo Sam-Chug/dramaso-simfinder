@@ -10,6 +10,7 @@ Bugs:
     - Confetti animation is odd when spamming
     
 v0.2.5 TODO:
+    - Hyperlinking sims/lots by url parameters
     - Re-sort sims by age, since cakes add days
     - Show count of how many sims are at the same job lot (out-of-range locations still match up)
     - Style editor
@@ -17,12 +18,12 @@ v0.2.5 TODO:
         - GUI editor for custom styles
     - Hidden sims show up as being in lot, even when all sims at lot are accounted for
     - Bookmark list and lot list should fight for space, always reach max height if possible
-    - Refactor "CleanLink" function
     - New colors:
         - Royal purple (felt texture?)
         - Something special for New Years (stars?)
 
 Low Priority TODO:
+    - Refactor "CleanLink" function
     - Reduce bookmark lookups on page launch
         - Cache name/id pairs of bookmarked sims
     - Some functions are still out of place (constant refactor)
