@@ -10,6 +10,7 @@ Bugs:
     - Confetti animation is odd when spamming
     
 v0.2.5 TODO:
+    - Remove all URLs from functions.js
     - Hyperlinking sims/lots by url parameters
     - Re-sort sims by age, since cakes add days
     - Show count of how many sims are at the same job lot (out-of-range locations still match up)
@@ -34,10 +35,10 @@ Low Priority TODO:
         - Layout is very large, could be much smaller
     - Refactor code to be modular per-tso server
         - eg. simply fill in api links to get it working elsewhere
-    - Clean up code + comments
 
 Possible Features (Requires update to API):
     - Last-online date for sims/lots
+    - Display sim's skills
     
 Side Features:
     - Lot renderer/object finder
