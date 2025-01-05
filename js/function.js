@@ -934,6 +934,16 @@ guiUtils = function() {
     // Write info to lot thumbnail box
     async function writeLotThumbnail(selectedLotShort, selectedLotLong, existence, selectedSimLong) {
 
+        // Add click listener to open new tab with selected lot's thumbnail expanded
+        GUI_LOT_THUMBNAIL.addEventListener("click", function() {
+
+            let baseURL = window.location.origin;
+            let completeURL = `${baseURL}/lot-inspector.html?lot-id=${selectedLotLong.lot_id}`;
+
+            console.log(completeURL);
+            window.open(completeURL);
+        });
+
         // If sim not landed at a lot, contextually fill lot bio
         if ((existence != "LANDED" && existence != "LANDED_HIDDEN") && existence != "") {
 
