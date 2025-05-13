@@ -1,4 +1,4 @@
-const VERSION_STR = "v0.2.4g";
+const VERSION_STR = "v0.2.4h";
 
 //#region API Links
 const BASE_URL = "https://backup.dramaso.org";
@@ -238,20 +238,20 @@ const GUI_COLORMODE_BUTTON = document.getElementById('colormode-button');
 //#endregion
 
 //#region Image paths
-const RES_NAMESORT_SELECTED = "./images/buttons/name-sort-selected.png?v0.2.4g";
-const RES_NAMESORT_DESELECTED = "./images/buttons/name-sort.png?v0.2.4g";
+const RES_NAMESORT_SELECTED = "./images/buttons/name-sort-selected.png?v0.2.4h";
+const RES_NAMESORT_DESELECTED = "./images/buttons/name-sort.png?v0.2.4h";
 
-const RES_UNKNOWN_LOT = "./images/unknown.png?v0.2.4g";
+const RES_UNKNOWN_LOT = "./images/unknown.png?v0.2.4h";
 
-const RES_JOBS_ACTIVE = "./images/buttons/jobs-active.png?v0.2.4g";
+const RES_JOBS_ACTIVE = "./images/buttons/jobs-active.png?v0.2.4h";
 
-const RES_LOT_FILTER = "./images/filter-spritesheets/lot-filter.png?v0.2.4g";
-const RES_LOT_FILTER_HOVER = "./images/filter-spritesheets/lot-filter-hover.png?v0.2.4g";
-const RES_LOT_FILTER_SELECTED = "./images/filter-spritesheets/lot-filter-selected.png?v0.2.4g";
+const RES_LOT_FILTER = "./images/filter-spritesheets/lot-filter.png?v0.2.4h";
+const RES_LOT_FILTER_HOVER = "./images/filter-spritesheets/lot-filter-hover.png?v0.2.4h";
+const RES_LOT_FILTER_SELECTED = "./images/filter-spritesheets/lot-filter-selected.png?v0.2.4h";
 
-const RES_SIM_FILTER = "./images/filter-spritesheets/sim-filter.png?v0.2.4g";
-const RES_SIM_FILTER_HOVER = "./images/filter-spritesheets/sim-filter-hover.png?v0.2.4g";
-const RES_SIM_FILTER_SELECTED = "./images/filter-spritesheets/sim-filter-selected.png?v0.2.4g";
+const RES_SIM_FILTER = "./images/filter-spritesheets/sim-filter.png?v0.2.4h";
+const RES_SIM_FILTER_HOVER = "./images/filter-spritesheets/sim-filter-hover.png?v0.2.4h";
+const RES_SIM_FILTER_SELECTED = "./images/filter-spritesheets/sim-filter-selected.png?v0.2.4h";
 //#endregion
 
 //#region Sim style lists
@@ -276,10 +276,10 @@ const CONFETTI_DATA = {
 const CUSTOM_STYLE_REAGAN = "Reaganomics Lamborghini";
 
 const CUSTOM_STYLE_SIMHEADS = {
-    male: "./images/sim-faces/simface-m.png?v0.2.4g",
-    female: "./images/sim-faces/simface-f.png?v0.2.4g",
-    reagan: "./images/sim-faces/simface-rea.png?v0.2.4g",
-    bear: "./images/sim-faces/simface-b.png?v0.2.4g"
+    male: "./images/sim-faces/simface-m.png?v0.2.4h",
+    female: "./images/sim-faces/simface-f.png?v0.2.4h",
+    reagan: "./images/sim-faces/simface-rea.png?v0.2.4h",
+    bear: "./images/sim-faces/simface-b.png?v0.2.4h"
 };
 const CUSTOM_STYLE_BLOCK = {
     bp: {
