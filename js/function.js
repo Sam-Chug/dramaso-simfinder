@@ -1744,10 +1744,10 @@ searchUtils = function() {
         if (!isNaN(simName)) {
 
             // Sim ID lookup
-            simLong = await apiUtils.getAPIData("${BASE_URL}/userapi/avatars/" + simName);
+            simLong = await apiUtils.getAPIData(`${BASE_URL}/userapi/avatars/` + simName);
 
             // Alert if id doesn't exist
-            if ("error" in simLong || "avatarId") {
+            if ("error" in simLong || simName < 0) {
 
                 alert("Cannot find sim with ID \"" + simName + "\"");
                 return;
