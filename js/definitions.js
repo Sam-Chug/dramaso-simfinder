@@ -1,8 +1,9 @@
-const VERSION_STR = "v0.2.4f";
+const VERSION_STR = "v0.2.4g";
 
 //#region API Links
-const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
-const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
+const BASE_URL = "https://backup.dramaso.org";
+const SIM_ONLINE_URL = `${BASE_URL}/userapi/avatars/online`;
+const LOTS_ONLINE_URL = `${BASE_URL}/userapi/city/1/lots/online`;
 
 const STAFF_LIST_URL = "https://raw.githubusercontent.com/Sam-Chug/sim-finder-data/refs/heads/main/dramaso/dso-staff-names.txt";
 const RECENT_COMMIT_URL = "https://api.github.com/repos/sam-chug/dramaso-simfinder/branches/master";

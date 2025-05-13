@@ -10,11 +10,11 @@ main = function() {
         let siteLink = getSiteLink();
         let urlParams = new URLSearchParams(siteLink);
 
-        let lotData = await fetchAPI(`https://api.dramaso.org/userapi/lots/${urlParams.get(`lot-id`)}`);
+        let lotData = await fetchAPI(`${BASE_URL}/userapi/lots/${urlParams.get(`lot-id`)}`);
         console.log(lotData);
 
         let cacheBust = Math.floor(Math.random() * 10000000);
-        let imageSource = `https://api.dramaso.org/userapi/city/1/${lotData.location}.png?cachebust:${cacheBust}`;
+        let imageSource = `${BASE_URL}/userapi/city/1/${lotData.location}.png?cachebust:${cacheBust}`;
         console.log("%cFetching Lot Image:\n\n", "color: black; background-color: lightgreen;", imageSource);
 
         let lotImage = document.getElementById("lot-viewer-image");
