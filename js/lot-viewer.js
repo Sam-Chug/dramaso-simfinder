@@ -10,8 +10,11 @@ main = function() {
         let siteLink = getSiteLink();
         let urlParams = new URLSearchParams(siteLink);
 
+        // TODO: search by either lot ID or name
+        //      - with name, populate rich embed title with lot's name
+        // https://api.dramaso.org/userapi/city/1/lots/name/M.O.M.I.%20Headquarters
+        
         let lotData = await fetchAPI(`${BASE_URL}/userapi/lots/${urlParams.get(`lot-id`)}`);
-        console.log(lotData);
 
         let cacheBust = Math.floor(Math.random() * 10000000);
         let imageSource = `${BASE_URL}/userapi/city/1/${lotData.location}.png?cachebust:${cacheBust}`;
@@ -26,8 +29,6 @@ main = function() {
         document.querySelector(`meta[name="og:title"]`).setAttribute("content", `${lotData.name} At DramaSO`);
         document.querySelector(`meta[name="og:url"]`).setAttribute("content", `${siteLink}`);
         document.querySelector(`meta[name="og:image"]`).setAttribute("content", `${imageSource}`);
-
-        window.location.search = "fart";
     }
 
     function getSiteLink() {
