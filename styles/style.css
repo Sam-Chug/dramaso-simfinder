@@ -1500,6 +1500,38 @@ body {
     align-content: center;
 }
 
+.lot-viewer-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lot-viewer-title {
+    z-index: 20;
+    cursor: default;
+
+    margin: 10px auto;
+    padding: 4px 12px;
+
+    font-size: 2.5em;
+    text-align: center;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+
+    border-radius: 25px;
+    border-collapse: collapse;
+    overflow: hidden;
+
+    background-color: var(--outset-title-bg);
+    box-shadow: -2px -2px 3px 2px rgba(0, 0, 0, 0.4) inset,
+                5px 5px 3px 1px rgba(255, 255, 255, 0.5) inset,
+                3px 3px 3px 1px rgba(0, 0, 0, 0.6);
+
+    align-self: center;
+    padding: 5px 20px;
+    margin: 12px 6px;
+}
+
 .lot-viewer-image {
     display: block;
     width: 100vmin;

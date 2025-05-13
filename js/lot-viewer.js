@@ -20,7 +20,9 @@ main = function() {
         let lotImage = document.getElementById("lot-viewer-image");
         lotImage.src = imageSource;
 
+        document.getElementById("lot-viewer-title").textContent = lotData.name;
         document.title = lotData.name;
+        
         document.querySelector(`meta[name="og:title"]`).setAttribute("content", `${lotData.name} At DramaSO`);
         document.querySelector(`meta[name="og:url"]`).setAttribute("content", `${siteLink}`);
         document.querySelector(`meta[name="og:image"]`).setAttribute("content", `${imageSource}`);
