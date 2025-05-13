@@ -22,10 +22,12 @@ main = function() {
 
         document.getElementById("lot-viewer-title").textContent = lotData.name;
         document.title = lotData.name;
-        
+
         document.querySelector(`meta[name="og:title"]`).setAttribute("content", `${lotData.name} At DramaSO`);
         document.querySelector(`meta[name="og:url"]`).setAttribute("content", `${siteLink}`);
         document.querySelector(`meta[name="og:image"]`).setAttribute("content", `${imageSource}`);
+
+        window.location.search = "fart";
     }
 
     function getSiteLink() {
