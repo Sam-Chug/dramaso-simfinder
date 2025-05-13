@@ -775,7 +775,8 @@ guiUtils = function() {
                 if (!simUtils.checkIfSimInLongCache(simName)) {
 
                     // If sim not in long cache, fetch from API and add to cache
-                    selectedSimLong = await apiUtils.getAPIData("https://api.dramaso.org/userapi/city/1/avatars/name/" + simName.replace(" ", "%20"));
+                    let baseURL = `${BASE_URL}/userapi/city/1/avatars/name/`;
+                    selectedSimLong = await apiUtils.getAPIData(baseURL + simName.replace(" ", "%20"));
                     simDataHolder.offlineLongSimList.push(selectedSimLong);
                 }
                 else {
@@ -934,6 +935,16 @@ guiUtils = function() {
     // Write info to lot thumbnail box
     async function writeLotThumbnail(selectedLotShort, selectedLotLong, existence, selectedSimLong) {
 
+        // Add click listener to open new tab with selected lot's thumbnail expanded
+        GUI_LOT_THUMBNAIL.addEventListener("click", function() {
+
+            let baseURL = window.location.origin;
+            let completeURL = `${baseURL}/lot-inspector.html?lot-id=${selectedLotLong.lot_id}`;
+
+            console.log(completeURL);
+            window.open(completeURL);
+        });
+
         // If sim not landed at a lot, contextually fill lot bio
         if ((existence != "LANDED" && existence != "LANDED_HIDDEN") && existence != "") {
 
@@ -953,7 +964,7 @@ guiUtils = function() {
         // Grab lot thumbnail from API
         // TODO: move this to api utils
         let cacheBust = Math.floor(Math.random() * 10000000);
-        let imageSource = `https://api.dramaso.org/userapi/city/1/${selectedLotLong.location}.png?cachebust:${cacheBust}`;
+        let imageSource = `${BASE_URL}/userapi/city/1/${selectedLotLong.location}.png?cachebust:${cacheBust}`;
         console.log("%cFetching Lot Image:\n\n", "color: black; background-color: lightgreen;", imageSource);
 
         // Set image
@@ -1148,12 +1159,12 @@ guiUtils = function() {
         if (isTownHall) {
 
             // Get townhall object
-            townhallObj = await apiUtils.getAPIData(`https://api.dramaso.org/userapi/neighborhoods/${selectedLot.neighborhood_id}`);
+            townhallObj = await apiUtils.getAPIData(`${BASE_URL}/userapi/neighborhoods/${selectedLot.neighborhood_id}`);
 
             // Get mayor
             if (townhallObj.mayor_id != null) {
 
-                let avatarLong = await apiUtils.getAPIData(`https://api.dramaso.org/userapi/avatars?ids=${townhallObj.mayor_id}`);
+                let avatarLong = await apiUtils.getAPIData(`${BASE_URL}/userapi/avatars?ids=${townhallObj.mayor_id}`);
                 mayor = avatarLong.avatars[0];
             }
             else mayor = {
@@ -1730,10 +1741,26 @@ searchUtils = function() {
         if (simName == "") return;
 
         let simLong;
-        if (!simUtils.checkIfSimInLongCache(simName)) {
+        if (!isNaN(simName)) {
 
-            // If sim not cached, fetch from API
-            simLong = await apiUtils.getAPIData("https://api.dramaso.org/userapi/city/1/avatars/name/" + simName.replace(" ", "%20"));
+            // Sim ID lookup
+            simLong = await apiUtils.getAPIData(`${BASE_URL}/userapi/avatars/` + simName);
+
+            // Alert if id doesn't exist
+            if ("error" in simLong || simName < 0) {
+
+                alert("Cannot find sim with ID \"" + simName + "\"");
+                return;
+            }
+
+            // Push to cache
+            apiUtils.sendSimEntityAnalytics(simLong.name, simLong.avatar_id);
+            simDataHolder.offlineLongSimList.push(simLong);
+        }
+        else if (!simUtils.checkIfSimInLongCache(simName)) {
+
+            // Sim name lookup
+            simLong = await apiUtils.getAPIData(`${BASE_URL}/userapi/city/1/avatars/name/` + simName.replace(" ", "%20"));
 
             // Alert if sim doesn't exist
             if ("error" in simLong) {
@@ -1765,7 +1792,7 @@ searchUtils = function() {
         if (!simUtils.checkIfLotInLongCache(lotName)) {
 
             // If lot not cached, fetch from API
-            lotLong = await apiUtils.getAPIData("https://api.dramaso.org/userapi/city/1/lots/name/" + lotName.replace(" ", "%20"));
+            lotLong = await apiUtils.getAPIData(`${BASE_URL}/userapi/city/1/lots/name/` + lotName.replace(" ", "%20"));
 
             // Alert if lot doesn't exist
             if ("error" in lotLong) {
@@ -2091,7 +2118,7 @@ apiUtils = function() {
     // Id list to sim object (for bookmark id list)
     function buildLongSimLinkFromID(idList) {
 
-        let simIdString = "https://api.dramaso.org/userapi/avatars?ids=";
+        let simIdString = `${BASE_URL}/userapi/avatars?ids=`;
         for (i = 0; i < idList.length; i++) simIdString += idList[i] + ",";
 
         simIdString = simIdString.slice(0, -1);
@@ -2101,7 +2128,7 @@ apiUtils = function() {
     // Builds api lookup link from list of avatar ids
     function buildLongSimLink(simList) {
 
-        let simIdString = "https://api.dramaso.org/userapi/avatars?ids=";
+        let simIdString = `${BASE_URL}/userapi/avatars?ids=`;
         for (i = 0; i < simList.avatars.length; i++) simIdString += simList.avatars[i].avatar_id + ",";
     
         simIdString = simIdString.slice(0, -1);
@@ -2111,7 +2138,7 @@ apiUtils = function() {
     // Builds api lookup link from list of lot ids
     function buildLongLotLink(lotList) {
 
-        let lotIDString = "https://api.dramaso.org/userapi/lots?ids=";
+        let lotIDString = `${BASE_URL}/userapi/lots?ids=`;
         for (i = 0; i < lotList.lots.length; i++) lotIDString += lotList.lots[i].lot_id + ",";
     
         lotIDString = lotIDString.slice(0, -1);
@@ -2121,7 +2148,7 @@ apiUtils = function() {
     // Builds api link from lot's roommates
     function buildRoommateLink(longLot) {
 
-        let roommateIDString = "https://api.dramaso.org/userapi/avatars?ids=";
+        let roommateIDString = `${BASE_URL}/userapi/avatars?ids=`;
         for (i = 0; i < longLot.roommates.length; i++) roommateIDString += longLot.roommates[i] + ",";
 
         roommateIDString = roommateIDString.slice(0, -1);

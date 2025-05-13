@@ -3,24 +3,28 @@ Sim Finder Notes
 Patchnotes v0.2.5:
     - Removed market watch (for now)
     - Added smo percentages (updates automatically)
+    - Click on lot thumbnail to open new tab with the lot image blown up
+    - Lookup sims using sim-id
     
 Bugs:
     - Confetti animation is odd when spamming
     
 v0.2.5 TODO:
-    - Add day age to lots in lot view, or remove birthday emoji from lot list
+    - Remove all URLs from functions.js
+    - Hyperlinking sims/lots by url parameters
+    - Re-sort sims by age, since cakes add days
     - Show count of how many sims are at the same job lot (out-of-range locations still match up)
     - Style editor
         - Either in-site or a new repo
         - GUI editor for custom styles
     - Hidden sims show up as being in lot, even when all sims at lot are accounted for
     - Bookmark list and lot list should fight for space, always reach max height if possible
-    - Refactor "CleanLink" function
     - New colors:
         - Royal purple (felt texture?)
         - Something special for New Years (stars?)
 
 Low Priority TODO:
+    - Refactor "CleanLink" function
     - Reduce bookmark lookups on page launch
         - Cache name/id pairs of bookmarked sims
     - Some functions are still out of place (constant refactor)
@@ -31,10 +35,10 @@ Low Priority TODO:
         - Layout is very large, could be much smaller
     - Refactor code to be modular per-tso server
         - eg. simply fill in api links to get it working elsewhere
-    - Clean up code + comments
 
 Possible Features (Requires update to API):
     - Last-online date for sims/lots
+    - Display sim's skills
     
 Side Features:
     - Lot renderer/object finder

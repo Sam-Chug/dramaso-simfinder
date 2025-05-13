@@ -1,8 +1,9 @@
-const VERSION_STR = "v0.2.4f";
+const VERSION_STR = "v0.2.4g";
 
 //#region API Links
-const SIM_ONLINE_URL = "https://api.dramaso.org/userapi/avatars/online";
-const LOTS_ONLINE_URL = "https://api.dramaso.org/userapi/city/1/lots/online";
+const BASE_URL = "https://backup.dramaso.org";
+const SIM_ONLINE_URL = `${BASE_URL}/userapi/avatars/online`;
+const LOTS_ONLINE_URL = `${BASE_URL}/userapi/city/1/lots/online`;
 
 const STAFF_LIST_URL = "https://raw.githubusercontent.com/Sam-Chug/sim-finder-data/refs/heads/main/dramaso/dso-staff-names.txt";
 const RECENT_COMMIT_URL = "https://api.github.com/repos/sam-chug/dramaso-simfinder/branches/master";
@@ -237,20 +238,20 @@ const GUI_COLORMODE_BUTTON = document.getElementById('colormode-button');
 //#endregion
 
 //#region Image paths
-const RES_NAMESORT_SELECTED = "./images/buttons/name-sort-selected.png?v0.2.4f";
-const RES_NAMESORT_DESELECTED = "./images/buttons/name-sort.png?v0.2.4f";
+const RES_NAMESORT_SELECTED = "./images/buttons/name-sort-selected.png?v0.2.4g";
+const RES_NAMESORT_DESELECTED = "./images/buttons/name-sort.png?v0.2.4g";
 
-const RES_UNKNOWN_LOT = "./images/unknown.png?v0.2.4f";
+const RES_UNKNOWN_LOT = "./images/unknown.png?v0.2.4g";
 
-const RES_JOBS_ACTIVE = "./images/buttons/jobs-active.png?v0.2.4f";
+const RES_JOBS_ACTIVE = "./images/buttons/jobs-active.png?v0.2.4g";
 
-const RES_LOT_FILTER = "./images/filter-spritesheets/lot-filter.png?v0.2.4f";
-const RES_LOT_FILTER_HOVER = "./images/filter-spritesheets/lot-filter-hover.png?v0.2.4f";
-const RES_LOT_FILTER_SELECTED = "./images/filter-spritesheets/lot-filter-selected.png?v0.2.4f";
+const RES_LOT_FILTER = "./images/filter-spritesheets/lot-filter.png?v0.2.4g";
+const RES_LOT_FILTER_HOVER = "./images/filter-spritesheets/lot-filter-hover.png?v0.2.4g";
+const RES_LOT_FILTER_SELECTED = "./images/filter-spritesheets/lot-filter-selected.png?v0.2.4g";
 
-const RES_SIM_FILTER = "./images/filter-spritesheets/sim-filter.png?v0.2.4f";
-const RES_SIM_FILTER_HOVER = "./images/filter-spritesheets/sim-filter-hover.png?v0.2.4f";
-const RES_SIM_FILTER_SELECTED = "./images/filter-spritesheets/sim-filter-selected.png?v0.2.4f";
+const RES_SIM_FILTER = "./images/filter-spritesheets/sim-filter.png?v0.2.4g";
+const RES_SIM_FILTER_HOVER = "./images/filter-spritesheets/sim-filter-hover.png?v0.2.4g";
+const RES_SIM_FILTER_SELECTED = "./images/filter-spritesheets/sim-filter-selected.png?v0.2.4g";
 //#endregion
 
 //#region Sim style lists
@@ -275,10 +276,10 @@ const CONFETTI_DATA = {
 const CUSTOM_STYLE_REAGAN = "Reaganomics Lamborghini";
 
 const CUSTOM_STYLE_SIMHEADS = {
-    male: "./images/sim-faces/simface-m.png?v0.2.4f",
-    female: "./images/sim-faces/simface-f.png?v0.2.4f",
-    reagan: "./images/sim-faces/simface-rea.png?v0.2.4f",
-    bear: "./images/sim-faces/simface-b.png?v0.2.4f"
+    male: "./images/sim-faces/simface-m.png?v0.2.4g",
+    female: "./images/sim-faces/simface-f.png?v0.2.4g",
+    reagan: "./images/sim-faces/simface-rea.png?v0.2.4g",
+    bear: "./images/sim-faces/simface-b.png?v0.2.4g"
 };
 const CUSTOM_STYLE_BLOCK = {
     bp: {
