@@ -57,7 +57,7 @@ simFinderMain = function() {
         simDataHolder.bookmarkList = bookmarkList;
 
         // Get data for modules
-        simDataHolder.payoutData = await apiUtils.getAPIData(NEWSPAPER_URL);
+        // simDataHolder.payoutData = await apiUtils.getAPIData(NEWSPAPER_URL);
         simDataHolder.marketData = simModuleUtils.returnMarketObject(
             simDataHolder.simLongList, 
             simDataHolder.simShortList, 
@@ -84,7 +84,7 @@ simFinderMain = function() {
 
         // Populate modules
         // simModuleUtils.writeMarketWatch(simDataHolder.marketData); (disabled for now)
-        simModuleUtils.writeSMOPercentages(simDataHolder.payoutData);
+        // simModuleUtils.writeSMOPercentages(simDataHolder.payoutData);
 
         // Set list sizes
         domUtils.sizeLists();
