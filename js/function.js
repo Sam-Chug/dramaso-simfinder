@@ -939,7 +939,9 @@ guiUtils = function() {
         GUI_LOT_THUMBNAIL.addEventListener("click", function() {
 
             let baseURL = window.location.origin;
-            let completeURL = `${baseURL}/dramaso-simfinder/lot-inspector.html?lot-id=${selectedLotLong.lot_id}`;
+            let liveURL = "";
+            if (!baseURL.includes("127")) liveURL = "/dramaso-simfinder"; // Hacky fix to make live testing and local testing easier
+            let completeURL = `${baseURL}${liveURL}/lot-inspector.html?lot-id=${selectedLotLong.lot_id}`;
 
             console.log(completeURL);
             window.open(completeURL);
